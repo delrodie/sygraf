@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Regions list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Statut</th>
+                <th>Slug</th>
+                <th>Publiepar</th>
+                <th>Modifiepar</th>
+                <th>Publiele</th>
+                <th>Modifiele</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for region in regions %}
+            <tr>
+                <td><a href="{{ path('admin_region_show', { 'id': region.id }) }}">{{ region.id }}</a></td>
+                <td>{{ region.libelle }}</td>
+                <td>{% if region.statut %}Yes{% else %}No{% endif %}</td>
+                <td>{{ region.slug }}</td>
+                <td>{{ region.publiePar }}</td>
+                <td>{{ region.modifiePar }}</td>
+                <td>{{ region.publieLe }}</td>
+                <td>{{ region.modifieLe }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_region_show', { 'id': region.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_region_edit', { 'id': region.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_region_new') }}">Create a new region</a>
+        </li>
+    </ul>
+{% endblock %}

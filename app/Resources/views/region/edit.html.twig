@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} :: Gestion des régions{% endblock %}
+{% block body %}
+    <div class="row clearfix">
+        <div class="col-12">
+            <div class="card">
+                <div class="body">
+                    {{ form_start(edit_form) }}
+                    <div class="row clearfix">
+
+                        <div class="col-12">
+                            <h6>Enregistrement </h6>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group">
+                                {{ form_widget(edit_form.libelle) }}
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-3">
+                            <div class="form-group">
+                                <label class="fancy-checkbox">
+                                    {{ form_widget(edit_form.statut) }}
+                                    <span>Activé</span>
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 text-center">
+                            <input type="submit" value="Modifier" class="btn btn-primary" />
+                        </div>
+
+                    </div>
+                    {{ form_end(edit_form) }}
+                    <div class="row clearfix" style="margin-top: 50px;">
+                        <div class="col-12">
+                            <h6>Liste des régions</h6>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th>ID</th>
+                                        <th>REGIONS</th>
+                                        <th>STATUTS</th>
+                                        <th>ACTIONS</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for region in regions %}
+                                        <tr>
+                                            <td class="text-center">{{ loop.index }}</td>
+                                            <td>{{ region.libelle }}</td>
+                                            <td class="text-center">
+                                                {% if region.statut %}
+                                                    <label class="fancy-checkbox">
+                                                        <input class="checkbox-tick" type="checkbox" name="checkbox" checked readonly>
+                                                        <span></span>
+                                                    </label>
+                                                {% else %}
+                                                    <label class="fancy-checkbox">
+                                                        <input class="checkbox-tick" type="checkbox" name="checkbox" readonly>
+                                                        <span></span>
+                                                    </label>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ path('admin_region_edit', {'slug': region.slug}) }}" title="Modifier"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('assets/bundles/easypiechart.bundle.js')) }}"></script>
+    <script src="{{ absolute_url(asset('assets/bundles/mainscripts.bundle.js')) }}"></script>
+{% endblock %}
