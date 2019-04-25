@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Typeformations list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Statut</th>
+                <th>Slug</th>
+                <th>Publiepar</th>
+                <th>Modifiepar</th>
+                <th>Publiele</th>
+                <th>Modifiele</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for typeFormation in typeFormations %}
+            <tr>
+                <td><a href="{{ path('typeformation_show', { 'id': typeFormation.id }) }}">{{ typeFormation.id }}</a></td>
+                <td>{{ typeFormation.libelle }}</td>
+                <td>{% if typeFormation.statut %}Yes{% else %}No{% endif %}</td>
+                <td>{{ typeFormation.slug }}</td>
+                <td>{{ typeFormation.publiePar }}</td>
+                <td>{{ typeFormation.modifiePar }}</td>
+                <td>{{ typeFormation.publieLe }}</td>
+                <td>{{ typeFormation.modifieLe }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('typeformation_show', { 'id': typeFormation.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('typeformation_edit', { 'id': typeFormation.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('typeformation_new') }}">Create a new typeFormation</a>
+        </li>
+    </ul>
+{% endblock %}

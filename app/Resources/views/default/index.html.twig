@@ -1,173 +1,136 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div id="main-content">
-		<div class="container-fluid">
-			<div class="block-header">
-				<div class="row">
-					<div class="col-lg-6 col-md-8 col-sm-12">
-						<h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Tableau de bord</h2>
-						<ul class="breadcrumb">
-							<li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
-							<li class="breadcrumb-item active">Dashboard</li>
-						</ul>
+	<div class="row clearfix">
+		<div class="col-lg-3 col-md-6">
+			<div class="card top_counter">
+				<div class="body">
+					<div class="icon"><i class="fa fa-user"></i> </div>
+					<div class="content">
+						<div class="text">CEP</div>
+						<h5 class="number">22</h5>
 					</div>
-					<div class="col-lg-6 col-md-4 col-sm-12 text-right">
-						<div class="bh_chart hidden-xs">
-							<div class="float-left m-r-15 text-center">
-								<small><strong>CEP</strong></small>
-								<h6 class="mb-0 mt-1"><i class="icon-users"></i> 1.784</h6>
-							</div>
-						</div>
-						<div class="bh_chart hidden-sm">
-							<div class="float-left m-r-15 text-center">
-								<small><strong>PREBADGE</strong></small>
-								<h6 class="mb-0 mt-1"><i class="icon-users"></i> 1.325</h6>
-							</div>
-						</div>
-						<div class="bh_chart hidden-sm">
-							<div class="float-left m-r-15 text-center">
-								<small><strong>BADGE</strong></small>
-								<h6 class="mb-0 mt-1"><i class="icon-users"></i> 1.013</h6>
-							</div>
-						</div>
-						<div class="bh_chart hidden-sm">
-							<div class="float-left m-r-15 text-center">
-								<small><strong>III BUCHETTES</strong></small>
-								<h6 class="mb-0 mt-1"><i class="icon-users"></i> 1.013</h6>
-							</div>
-						</div>
-						<div class="bh_chart hidden-sm">
-							<div class="float-left m-r-15 text-center">
-								<small><strong>IV BUCHETTES</strong></small>
-								<h6 class="mb-0 mt-1"><i class="icon-users"></i> 1.013</h6>
-							</div>
-						</div>
+					<hr>
+					<div class="icon"><i class="fa fa-users"></i> </div>
+					<div class="content">
+						<div class="text">PREBADGE</div>
+						<h5 class="number">425</h5>
+					</div>
+					<hr>
+					<div class="icon"><i class="fa fa-users"></i> </div>
+					<div class="content">
+						<div class="text">BADGE</div>
+						<h5 class="number">425</h5>
 					</div>
 				</div>
 			</div>
-
-			<div class="row clearfix">
-				<div class="col-lg-3 col-md-6">
-					<div class="card top_counter">
-						<div class="body">
-							<div class="icon"><i class="fa fa-user"></i> </div>
-							<div class="content">
-								<div class="text">CEP</div>
-								<h5 class="number">22</h5>
-							</div>
-							<hr>
-							<div class="icon"><i class="fa fa-users"></i> </div>
-							<div class="content">
-								<div class="text">PREBADGE</div>
-								<h5 class="number">425</h5>
-							</div>
-							<hr>
-							<div class="icon"><i class="fa fa-users"></i> </div>
-							<div class="content">
-								<div class="text">BADGE</div>
-								<h5 class="number">425</h5>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="card text-center">
-						<div class="body">
-							<div class="sparkline-pie m-t-20">6,4,8</div>
-							<div class="stats-report m-b-30">
-								<div class="stat-item">
-									<h5>CEP</h5>
-									<b class="col-black">84.60%</b></div>
-								<div class="stat-item">
-									<h5>PREBADGE</h5>
-									<b class="col-black">15.40%</b></div>
-								<div class="stat-item">
-									<h5>BADGE</h5>
-									<b class="col-black">5.10%</b></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-md-12">
-					<div class="card">
-						<div class="header">
-							<h2>Genre</h2>
-						</div>
-						<div class="body text-center">
-							<div class="row">
-								<div class="col-md-6 col-xs-6">
-									<h6>Hommes</h6>
-									<input type="text" class="knob2" data-linecap="round" value="73" data-width="125" data-height="125" data-thickness="0.15" data-fgColor="#49a9e5" readonly>
-								</div>
-								<div class="col-md-6 col-xs-6">
-									<h6>Femmes</h6>
-									<input type="text" class="knob2" data-linecap="round" value="27" data-width="125" data-height="125" data-thickness="0.15" data-fgColor="#b880e1" readonly>
-								</div>
-							</div>
-
-						</div>
+		</div>
+		<div class="col-lg-3 col-md-6">
+			<div class="card text-center">
+				<div class="body">
+					<div class="sparkline-pie m-t-20">6,4,8</div>
+					<div class="stats-report m-b-30">
+						<div class="stat-item">
+							<h5>CEP</h5>
+							<b class="col-black">84.60%</b></div>
+						<div class="stat-item">
+							<h5>PREBADGE</h5>
+							<b class="col-black">15.40%</b></div>
+						<div class="stat-item">
+							<h5>BADGE</h5>
+							<b class="col-black">5.10%</b></div>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="col-lg-6 col-md-12">
+			<div class="card">
+				<div class="header">
+					<h2>Genre</h2>
+				</div>
+				<div class="body text-center">
+					<div class="row">
+						<div class="col-md-6 col-xs-6">
+							<h6>Hommes</h6>
+							<input type="text" class="knob2" data-linecap="round" value="73" data-width="125" data-height="125" data-thickness="0.15" data-fgColor="#49a9e5" readonly>
+						</div>
+						<div class="col-md-6 col-xs-6">
+							<h6>Femmes</h6>
+							<input type="text" class="knob2" data-linecap="round" value="27" data-width="125" data-height="125" data-thickness="0.15" data-fgColor="#b880e1" readonly>
+						</div>
+					</div>
 
-			<div class="row">
-				<div class="col-lg-12 col-md-12">
-					<div class="card">
-						<div class="header">
-							<h2>Tableau recapitulatif des</h2>
-						</div>
-						<div class="body">
-							<div class="table-responsive">
-								<table class="table table-hover m-b-0">
-									<thead class="thead-dark">
-									<tr>
-										<th class="text-center">REGIONS</th>
-										<th class="text-center">CEP</th>
-										<th class="text-center">PREBADGE</th>
-										<th class="text-center">BADGE</th>
-										<th class="text-center">3 BUCHETTES</th>
-										<th class="text-center">4 BUCHETTES</th>
-										<th class="text-center">TOTAL</th>
-									</tr>
-									</thead>
-									<tbody>
-									<tr>
-										<td class="text-center">ABENGOUROU</td>
-										<td class="text-center">25</td>
-										<td class="text-center"><span>23</span></td>
-										<td class="text-center"><span>34</span></td>
-										<td class="text-center"><span>32</span></td>
-										<td class="text-center"><span>32</span></td>
-										<td class="text-center"><strong>322</strong></td>
-									</tr>
-									<tr>
-										<td class="text-center">ABENGOUROU</td>
-										<td class="text-center">25</td>
-										<td class="text-center"><span>23</span></td>
-										<td class="text-center"><span>34</span></td>
-										<td class="text-center"><span>32</span></td>
-										<td class="text-center"><span>32</span></td>
-										<td class="text-center"><strong>322</strong></td>
-									</tr>
-									<tr>
-										<td class="text-center">ABENGOUROU</td>
-										<td class="text-center">25</td>
-										<td class="text-center"><span>23</span></td>
-										<td class="text-center"><span>34</span></td>
-										<td class="text-center"><span>32</span></td>
-										<td class="text-center"><span>32</span></td>
-										<td class="text-center"><strong>322</strong></td>
-									</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12 col-md-12">
+			<div class="card">
+				<div class="header">
+					<h2>Tableau recapitulatif des</h2>
+				</div>
+				<div class="body">
+					<div class="table-responsive">
+						<table class="table table-hover m-b-0">
+							<thead class="thead-dark">
+							<tr>
+								<th class="text-center">REGIONS</th>
+								<th class="text-center">CEP</th>
+								<th class="text-center">PREBADGE</th>
+								<th class="text-center">BADGE</th>
+								<th class="text-center">3 BUCHETTES</th>
+								<th class="text-center">4 BUCHETTES</th>
+								<th class="text-center">TOTAL</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td class="text-center">ABENGOUROU</td>
+								<td class="text-center">25</td>
+								<td class="text-center"><span>23</span></td>
+								<td class="text-center"><span>34</span></td>
+								<td class="text-center"><span>32</span></td>
+								<td class="text-center"><span>32</span></td>
+								<td class="text-center"><strong>322</strong></td>
+							</tr>
+							<tr>
+								<td class="text-center">ABENGOUROU</td>
+								<td class="text-center">25</td>
+								<td class="text-center"><span>23</span></td>
+								<td class="text-center"><span>34</span></td>
+								<td class="text-center"><span>32</span></td>
+								<td class="text-center"><span>32</span></td>
+								<td class="text-center"><strong>322</strong></td>
+							</tr>
+							<tr>
+								<td class="text-center">ABENGOUROU</td>
+								<td class="text-center">25</td>
+								<td class="text-center"><span>23</span></td>
+								<td class="text-center"><span>34</span></td>
+								<td class="text-center"><span>32</span></td>
+								<td class="text-center"><span>32</span></td>
+								<td class="text-center"><strong>322</strong></td>
+							</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 {% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ absolute_url(asset('assets/vendor/chartist/css/chartist.min.css')) }}">
+	<link rel="stylesheet" href="{{ absolute_url(asset('assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')) }}">
+	<link rel="stylesheet" href="{{ absolute_url(asset('assets/vendor/toastr/toastr.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ absolute_url(asset('assets/vendor/toastr/toastr.js')) }}"></script>
+	<script src="{{ absolute_url(asset('assets/bundles/chartist.bundle.js')) }}"></script>
+	<script src="{{ absolute_url(asset('assets/bundles/knob.bundle.js')) }}"></script>
+{% endblock %}
