@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Districts list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Statut</th>
+                <th>Slug</th>
+                <th>Publiepar</th>
+                <th>Modifiepar</th>
+                <th>Publiele</th>
+                <th>Modifiele</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for district in districts %}
+            <tr>
+                <td><a href="{{ path('district_show', { 'id': district.id }) }}">{{ district.id }}</a></td>
+                <td>{{ district.libelle }}</td>
+                <td>{% if district.statut %}Yes{% else %}No{% endif %}</td>
+                <td>{{ district.slug }}</td>
+                <td>{{ district.publiePar }}</td>
+                <td>{{ district.modifiePar }}</td>
+                <td>{{ district.publieLe }}</td>
+                <td>{{ district.modifieLe }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('district_show', { 'id': district.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('district_edit', { 'id': district.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('district_new') }}">Create a new district</a>
+        </li>
+    </ul>
+{% endblock %}

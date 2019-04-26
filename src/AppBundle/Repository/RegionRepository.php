@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class RegionRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Liste ordonnée des regions
+     */
+    public function liste()
+    {
+        return $this->createQueryBuilder('r')->where('r.statut = 1')->orderBy('r.libelle', 'ASC');
+    }
 }

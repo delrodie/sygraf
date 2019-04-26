@@ -6,12 +6,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Region
+ * District
  *
- * @ORM\Table(name="region")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RegionRepository")
+ * @ORM\Table(name="district")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\DistrictRepository")
  */
-class Region
+class District
 {
     /**
      * @var int
@@ -37,9 +37,10 @@ class Region
     private $statut;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\District", mappedBy="region")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Region", inversedBy="districts")
+     * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
-    private $districts;
+    private $region;
 
     /**
      * @var string
@@ -97,7 +98,7 @@ class Region
      *
      * @param string $libelle
      *
-     * @return Region
+     * @return District
      */
     public function setLibelle($libelle)
     {
@@ -121,7 +122,7 @@ class Region
      *
      * @param boolean $statut
      *
-     * @return Region
+     * @return District
      */
     public function setStatut($statut)
     {
@@ -145,7 +146,7 @@ class Region
      *
      * @param string $slug
      *
-     * @return Region
+     * @return District
      */
     public function setSlug($slug)
     {
@@ -169,7 +170,7 @@ class Region
      *
      * @param string $publiePar
      *
-     * @return Region
+     * @return District
      */
     public function setPubliePar($publiePar)
     {
@@ -193,7 +194,7 @@ class Region
      *
      * @param string $modifiePar
      *
-     * @return Region
+     * @return District
      */
     public function setModifiePar($modifiePar)
     {
@@ -217,7 +218,7 @@ class Region
      *
      * @param \DateTime $publieLe
      *
-     * @return Region
+     * @return District
      */
     public function setPublieLe($publieLe)
     {
@@ -241,7 +242,7 @@ class Region
      *
      * @param \DateTime $modifieLe
      *
-     * @return Region
+     * @return District
      */
     public function setModifieLe($modifieLe)
     {
@@ -259,45 +260,28 @@ class Region
     {
         return $this->modifieLe;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->districts = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add district
+     * Set region
      *
-     * @param \AppBundle\Entity\District $district
+     * @param \AppBundle\Entity\Region $region
      *
-     * @return Region
+     * @return District
      */
-    public function addDistrict(\AppBundle\Entity\District $district)
+    public function setRegion(\AppBundle\Entity\Region $region = null)
     {
-        $this->districts[] = $district;
+        $this->region = $region;
 
         return $this;
     }
 
     /**
-     * Remove district
+     * Get region
      *
-     * @param \AppBundle\Entity\District $district
+     * @return \AppBundle\Entity\Region
      */
-    public function removeDistrict(\AppBundle\Entity\District $district)
+    public function getRegion()
     {
-        $this->districts->removeElement($district);
-    }
-
-    /**
-     * Get districts
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDistricts()
-    {
-        return $this->districts;
+        return $this->region;
     }
 }
