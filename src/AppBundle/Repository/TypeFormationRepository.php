@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class TypeFormationRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Liste des formations
+     */
+    public function liste()
+    {
+        return $this->createQueryBuilder('tf')->where('tf.statut = 1');
+    }
 }

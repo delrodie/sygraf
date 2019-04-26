@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Certificats list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Code1</th>
+                <th>Code2</th>
+                <th>Motif</th>
+                <th>Statut</th>
+                <th>Publiepar</th>
+                <th>Modifiepar</th>
+                <th>Publiele</th>
+                <th>Modifiele</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for certificat in certificats %}
+            <tr>
+                <td><a href="{{ path('admin_certificat_show', { 'id': certificat.id }) }}">{{ certificat.id }}</a></td>
+                <td>{{ certificat.code1 }}</td>
+                <td>{{ certificat.code2 }}</td>
+                <td>{{ certificat.motif }}</td>
+                <td>{% if certificat.statut %}Yes{% else %}No{% endif %}</td>
+                <td>{{ certificat.publiePar }}</td>
+                <td>{{ certificat.modifiePar }}</td>
+                <td>{{ certificat.publieLe }}</td>
+                <td>{{ certificat.modifieLe }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_certificat_show', { 'id': certificat.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_certificat_edit', { 'id': certificat.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_certificat_new') }}">Create a new certificat</a>
+        </li>
+    </ul>
+{% endblock %}

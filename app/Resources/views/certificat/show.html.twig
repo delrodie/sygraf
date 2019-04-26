@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Certificat</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ certificat.id }}</td>
+            </tr>
+            <tr>
+                <th>Code1</th>
+                <td>{{ certificat.code1 }}</td>
+            </tr>
+            <tr>
+                <th>Code2</th>
+                <td>{{ certificat.code2 }}</td>
+            </tr>
+            <tr>
+                <th>Motif</th>
+                <td>{{ certificat.motif }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{% if certificat.statut %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Publiepar</th>
+                <td>{{ certificat.publiePar }}</td>
+            </tr>
+            <tr>
+                <th>Modifiepar</th>
+                <td>{{ certificat.modifiePar }}</td>
+            </tr>
+            <tr>
+                <th>Publiele</th>
+                <td>{{ certificat.publieLe }}</td>
+            </tr>
+            <tr>
+                <th>Modifiele</th>
+                <td>{{ certificat.modifieLe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_certificat_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_certificat_edit', { 'id': certificat.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

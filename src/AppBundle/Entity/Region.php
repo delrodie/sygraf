@@ -42,6 +42,13 @@ class Region
     private $districts;
 
     /**
+     * A une region sont affectés plusieurs certificats
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Certificat", mappedBy="region")
+     */
+    private $certificats;
+
+    /**
      * @var string
      *
      * @Gedmo\Slug(fields={"libelle"})
@@ -299,5 +306,39 @@ class Region
     public function getDistricts()
     {
         return $this->districts;
+    }
+
+    /**
+     * Add certificat
+     *
+     * @param \AppBundle\Entity\Certificat $certificat
+     *
+     * @return Region
+     */
+    public function addCertificat(\AppBundle\Entity\Certificat $certificat)
+    {
+        $this->certificats[] = $certificat;
+
+        return $this;
+    }
+
+    /**
+     * Remove certificat
+     *
+     * @param \AppBundle\Entity\Certificat $certificat
+     */
+    public function removeCertificat(\AppBundle\Entity\Certificat $certificat)
+    {
+        $this->certificats->removeElement($certificat);
+    }
+
+    /**
+     * Get certificats
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCertificats()
+    {
+        return $this->certificats;
     }
 }

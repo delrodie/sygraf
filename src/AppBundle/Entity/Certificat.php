@@ -6,12 +6,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TypeFormation
+ * Certificat
  *
- * @ORM\Table(name="type_formation")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TypeFormationRepository")
+ * @ORM\Table(name="certificat")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CertificatRepository")
  */
-class TypeFormation
+class Certificat
 {
     /**
      * @var int
@@ -25,16 +25,24 @@ class TypeFormation
     /**
      * @var string
      *
-     * @ORM\Column(name="libelle", type="string", length=255, unique=true)
+     * @ORM\Column(name="code", type="string", length=10, unique=true)
      */
-    private $libelle;
+    private $code;
+
+    /**
+     * Un certificat est affecté à une seule région
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Region", inversedBy="certificats")
+     * @ORM\JoinColumn(name="region", referencedColumnName="id", nullable=true)
+     */
+    private $region;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=1, unique=true)
+     * @ORM\Column(name="motif", type="text", nullable=true)
      */
-    private $code;
+    private $motif;
 
     /**
      * @var bool
@@ -44,17 +52,17 @@ class TypeFormation
     private $statut;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Certificat", mappedBy="formation")
+     * @var int
+     *
+     * @ORM\Column(name="flag", type="integer", nullable=true, options={"default": 0})
      */
-    private $certificats;
+    private $flag;
 
     /**
-     * @var string
-     *
-     * @Gedmo\Slug(fields={"libelle"})
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TypeFormation", inversedBy="certificats")
+     * @ORM\JoinColumn(name="formation_id", referencedColumnName="id")
      */
-    private $slug;
+    private $formation;
 
     /**
      * @var string
@@ -100,27 +108,122 @@ class TypeFormation
     }
 
     /**
-     * Set libelle
+     * Set code
      *
-     * @param string $libelle
+     * @param string $code
      *
-     * @return TypeFormation
+     * @return Certificat
      */
-    public function setLibelle($libelle)
+    public function setCode($code)
     {
-        $this->libelle = $libelle;
+        $this->code = $code;
 
         return $this;
     }
 
     /**
-     * Get libelle
+     * Get code
      *
      * @return string
      */
-    public function getLibelle()
+    public function getCode()
     {
-        return $this->libelle;
+        return $this->code;
+    }
+
+    /**
+     * Set region
+     *
+     * @param string $region
+     *
+     * @return Certificat
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return string
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+    /**
+     * Set code1
+     *
+     * @param string $code1
+     *
+     * @return Certificat
+     */
+    public function setCode1($code1)
+    {
+        $this->code1 = $code1;
+
+        return $this;
+    }
+
+    /**
+     * Get code1
+     *
+     * @return string
+     */
+    public function getCode1()
+    {
+        return $this->code1;
+    }
+
+    /**
+     * Set code2
+     *
+     * @param string $code2
+     *
+     * @return Certificat
+     */
+    public function setCode2($code2)
+    {
+        $this->code2 = $code2;
+
+        return $this;
+    }
+
+    /**
+     * Get code2
+     *
+     * @return string
+     */
+    public function getCode2()
+    {
+        return $this->code2;
+    }
+
+    /**
+     * Set motif
+     *
+     * @param string $motif
+     *
+     * @return Certificat
+     */
+    public function setMotif($motif)
+    {
+        $this->motif = $motif;
+
+        return $this;
+    }
+
+    /**
+     * Get motif
+     *
+     * @return string
+     */
+    public function getMotif()
+    {
+        return $this->motif;
     }
 
     /**
@@ -128,7 +231,7 @@ class TypeFormation
      *
      * @param boolean $statut
      *
-     * @return TypeFormation
+     * @return Certificat
      */
     public function setStatut($statut)
     {
@@ -148,35 +251,11 @@ class TypeFormation
     }
 
     /**
-     * Set slug
-     *
-     * @param string $slug
-     *
-     * @return TypeFormation
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
      * Set publiePar
      *
      * @param string $publiePar
      *
-     * @return TypeFormation
+     * @return Certificat
      */
     public function setPubliePar($publiePar)
     {
@@ -200,7 +279,7 @@ class TypeFormation
      *
      * @param string $modifiePar
      *
-     * @return TypeFormation
+     * @return Certificat
      */
     public function setModifiePar($modifiePar)
     {
@@ -224,7 +303,7 @@ class TypeFormation
      *
      * @param \DateTime $publieLe
      *
-     * @return TypeFormation
+     * @return Certificat
      */
     public function setPublieLe($publieLe)
     {
@@ -248,7 +327,7 @@ class TypeFormation
      *
      * @param \DateTime $modifieLe
      *
-     * @return TypeFormation
+     * @return Certificat
      */
     public function setModifieLe($modifieLe)
     {
@@ -268,67 +347,51 @@ class TypeFormation
     }
 
     /**
-     * Set code
+     * Set formation
      *
-     * @param string $code
+     * @param \AppBundle\Entity\TypeFormation $formation
      *
-     * @return TypeFormation
+     * @return Certificat
      */
-    public function setCode($code)
+    public function setFormation(\AppBundle\Entity\TypeFormation $formation = null)
     {
-        $this->code = $code;
+        $this->formation = $formation;
 
         return $this;
     }
 
     /**
-     * Get code
+     * Get formation
      *
-     * @return string
+     * @return \AppBundle\Entity\TypeFormation
      */
-    public function getCode()
+    public function getFormation()
     {
-        return $this->code;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->certificats = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->formation;
     }
 
+
     /**
-     * Add certificat
+     * Set flag
      *
-     * @param \AppBundle\Entity\Certificat $certificat
+     * @param integer $flag
      *
-     * @return TypeFormation
+     * @return Certificat
      */
-    public function addCertificat(\AppBundle\Entity\Certificat $certificat)
+    public function setFlag($flag)
     {
-        $this->certificats[] = $certificat;
+        $this->flag = $flag;
 
         return $this;
     }
 
     /**
-     * Remove certificat
+     * Get flag
      *
-     * @param \AppBundle\Entity\Certificat $certificat
+     * @return integer
      */
-    public function removeCertificat(\AppBundle\Entity\Certificat $certificat)
+    public function getFlag()
     {
-        $this->certificats->removeElement($certificat);
-    }
-
-    /**
-     * Get certificats
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCertificats()
-    {
-        return $this->certificats;
+        return $this->flag;
     }
 }
