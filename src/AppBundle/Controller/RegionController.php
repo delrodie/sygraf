@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Region;
+use AppBundle\Utils\RegionUtilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +38,7 @@ class RegionController extends Controller
      * @Route("/new", name="admin_region_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, RegionUtilities $utilities)
     {
         $region = new Region();
         $form = $this->createForm('AppBundle\Form\RegionType', $region);
@@ -45,8 +46,15 @@ class RegionController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($region);
-            $em->flush();
+            if (!$utilities->duplicate($region->getLibelle())){
+                $region->setLibelle(strtoupper($region->getLibelle()));
+                $em->persist($region);
+                $em->flush();
+
+                $this->addFlash('notice', 'La région '.$region->getLibelle().' a été enregistrée avec succès');
+            }else{
+                $this->addFlash('error', "Echèc de l'enregistrement!!! la région ".$region->getLibelle()." existe déjà.");
+            }
 
             return $this->redirectToRoute('admin_region_new');
         }
@@ -83,14 +91,17 @@ class RegionController extends Controller
      * @Route("/{slug}/edit", name="admin_region_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Region $region)
+    public function editAction(Request $request, Region $region, RegionUtilities $utilities)
     {
         $deleteForm = $this->createDeleteForm($region);
         $editForm = $this->createForm('AppBundle\Form\RegionType', $region);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $region->setLibelle(strtoupper($region->getLibelle()));
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('notice', "Modification effectuée avec succès!");
 
             return $this->redirectToRoute('admin_region_new');
         }
