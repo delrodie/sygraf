@@ -7,7 +7,7 @@
                 <div class="header">
                     <h2>Liste des certificats</h2>
                     <ul class="header-dropdown">
-                        <li><a href="javascript:void(0);" id="add" class="btn btn-info" data-toggle="modal" data-target="#addcontact">Ajouter de nouveaux certificats</a></li>
+                        <li><a href="javascript:void(0);" class="btn btn-info" data-toggle="modal" data-target="#addcontact">Affecter de nouveaux certificats</a></li>
                     </ul>
                 </div>
                 <div class="body">
@@ -31,30 +31,40 @@
                         <table class="table table-hover js-basic-example dataTable table-custom table-striped m-b-0 c_list">
                             <thead class="thead-dark">
                             <tr>
-                                <th class="text-center">ID</th>
-                                <th class="text-center">FORMATIONS</th>
-                                <th class="text-center">CERTIFICATS</th>
-                                <th class="text-center">STATUTS</th>
-                                <th class="text-center">ACTIONS</th>
+                                <th>ID</th>
+                                <th>REGIONS</th>
+                                <th>FORMATIONS</th>
+                                <th>DEBUTS</th>
+                                <th>FINS</th>
+                                <th>STATUTS</th>
+                                <th>ACTIONS</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for certificat in certificats %}
+                            {% for affectation in affectations %}
                                 <tr>
-                                    <td class="text-right">{{ loop.index }}</td>
-                                    <td>{{ certificat.formation.libelle }}</td>
-                                    <td class="text-center">{{ certificat.code }}</td>
-                                    <td class="text-center">
-                                        {% if (certificat.flag == 2) %}
-                                            <span class="text-success" title="Certificat attribué à un chef"><i class="fa fa-address-card-o"></i></span>
-                                        {% elseif (certificat.flag == 1) %}
-                                            <span class="text-dark" title="Certificat transferé à une région"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ affectation.region.libelle }}</td>
+                                    <td>{{ affectation.formation.libelle }}</td>
+                                    <td>{{ affectation.depart }}</td>
+                                    <td>{{ affectation.arrivee }}</td>
+                                    <td>
+                                        {% if affectation.statut %}
+                                            <label class="fancy-checkbox">
+                                                <input class="checkbox-tick" type="checkbox" name="checkbox" checked readonly>
+                                                <span></span>
+                                            </label>
                                         {% else %}
-                                            <span class="text-danger" title="Certificat en stock"><i class="fa fa-folder-open-o" aria-hidden="true"></i></span>
+                                            <label class="fancy-checkbox">
+                                                <input class="checkbox-tick" type="checkbox" name="checkbox" readonly>
+                                                <span></span>
+                                            </label>
                                         {% endif %}
                                     </td>
-                                    <td class="text-center">
-                                        <a href="{{ path('admin_certificat_edit', {'id': certificat.id}) }}" title="Modifier"><i class="fa fa-edit"></i></a>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                            <a href="#"><i class="fa fa-edit"></i></a>
+                                        </button>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -69,7 +79,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="title" id="defaultModalLabel">Ajout de nouveaux certificats</h6>
+                    <h6 class="title" id="defaultModalLabel">Attribution de certificats</h6>
                 </div>
                 {{ form_start(form) }}
                 <div class="modal-body">
@@ -79,14 +89,27 @@
                                 {{ form_widget(form.formation) }}
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <div class="form-group">
-                                <input type="integer" id="appbundle_certificat_code" name="code1" class="form-control" autocomplete="off" placeholder="Code debut plage">
+                                {{ form_widget(form.region) }}
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="integer" id="appbundle_certificat_code" name="code2" class="form-control" autocomplete="off" placeholder="Code fin plage">
+                                <select name="affectation_debut" id="appbundle_debut" class="form-control show-tick ms select2" required>
+                                    {% for certificat in certificats %}
+                                        <option value="{{ certificat.code }}">{{ certificat.code }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <select name="affectation_fin" id="appbundle_fin" class="form-control show-tick ms select2" required>
+                                    {% for certificat in certificats %}
+                                        <option value="{{ certificat.code }}">{{ certificat.code }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -96,11 +119,6 @@
                                     <span>Activé</span>
                                 </label>
 
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                {{ form_widget(form.motif) }}
                             </div>
                         </div>
 
@@ -134,11 +152,10 @@
     <script>
         $('.select2').select2();
         $(document).ready(function(){
-
             $('#ajouter').click(function () {
-                if (document.getElementById('appbundle_certificat_code').value !== ''){
+                if (document.getElementById('appbundle_debut').value !== ''){
                     //
-                    document.getElementById('ajouter').innerHTML = 'Veuillez-patienter, enregistrement encours ...';
+                    document.getElementById('ajouter').innerHTML = 'Veuillez-patienter, attribution encours ...';
                     //$(this).attr('visibility', 'hidden')
                     document.setTimeout(function () {
                         $(this).attr('disabled', 'disabled')
@@ -146,9 +163,6 @@
                 }
 
             });
-            $('#add').click(function () {
-                document.getElementById('appbundle_certificat_motif').style.visibility = "hidden";
-            })
         });
     </script>
 {% endblock %}

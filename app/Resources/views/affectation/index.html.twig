@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Affectations list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Depart</th>
+                <th>Arrivee</th>
+                <th>Statut</th>
+                <th>Publiepar</th>
+                <th>Modifiepar</th>
+                <th>Publiele</th>
+                <th>Modifiele</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for affectation in affectations %}
+            <tr>
+                <td><a href="{{ path('admin_affectation_show', { 'id': affectation.id }) }}">{{ affectation.id }}</a></td>
+                <td>{{ affectation.depart }}</td>
+                <td>{{ affectation.arrivee }}</td>
+                <td>{% if affectation.statut %}Yes{% else %}No{% endif %}</td>
+                <td>{{ affectation.publiePar }}</td>
+                <td>{{ affectation.modifiePar }}</td>
+                <td>{{ affectation.publieLe }}</td>
+                <td>{{ affectation.modifieLe }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_affectation_show', { 'id': affectation.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_affectation_edit', { 'id': affectation.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_affectation_new') }}">Create a new affectation</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -80,9 +80,9 @@
                                         <a href="#Projects" class="has-arrow"><i class="icon-screen-tablet"></i><span>Certificats</span></a>
                                         <ul>
                                             <li><a href="{{ path('admin_certificat_new') }}">Liste</a></li>
-                                            <li><a href="#">Gestion CEP</a></li>
-                                            <li><a href="#">Gestion PREBADGE</a></li>
-                                            <li><a href="#">Gestion BADGE</a></li>
+                                            <li><a href="{{ path('admin_affectation_new', {'formation': 'C'}) }}">Gestion CEP</a></li>
+                                            <li><a href="{{ path('admin_affectation_new', {'formation': 'B'}) }}">Gestion PREBADGE</a></li>
+                                            <!--<li><a href="{{ path('admin_affectation_new', {'formation': 'A'}) }}">Gestion BADGE</a></li>-->
                                         </ul>
                                     </li>
                                     <li>

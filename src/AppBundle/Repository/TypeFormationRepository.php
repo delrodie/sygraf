@@ -17,4 +17,13 @@ class TypeFormationRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('tf')->where('tf.statut = 1');
     }
+
+    /**
+     * La formation selon le type
+     * @uses by AffectationType
+     */
+    public function findBySlug($formation)
+    {
+        return $this->createQueryBuilder('tf')->where('tf.code = :formation')->setParameter('formation', $formation);
+    }
 }

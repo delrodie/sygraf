@@ -18,4 +18,20 @@ class CertificatRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('c')->orderBy('c.code', 'DESC')->getQuery()->getResult();
     }
+
+    /**
+     * Liste des certificats disponibles
+     * en fonction du type de formation
+     * @uses by AffectationController:newAction()
+     */
+    public function findDisponible($formation)
+    {
+        return $this->createQueryBuilder('c')
+                    ->innerJoin('c.formation', 'f')
+                    ->where('f.code = :formation')
+                    ->andWhere('c.flag = 0')
+                    ->setParameter('formation', $formation)
+                    ->getQuery()->getResult()
+            ;
+    }
 }

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Affectation</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ affectation.id }}</td>
+            </tr>
+            <tr>
+                <th>Depart</th>
+                <td>{{ affectation.depart }}</td>
+            </tr>
+            <tr>
+                <th>Arrivee</th>
+                <td>{{ affectation.arrivee }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{% if affectation.statut %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Publiepar</th>
+                <td>{{ affectation.publiePar }}</td>
+            </tr>
+            <tr>
+                <th>Modifiepar</th>
+                <td>{{ affectation.modifiePar }}</td>
+            </tr>
+            <tr>
+                <th>Publiele</th>
+                <td>{{ affectation.publieLe }}</td>
+            </tr>
+            <tr>
+                <th>Modifiele</th>
+                <td>{{ affectation.modifieLe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_affectation_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_affectation_edit', { 'id': affectation.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
