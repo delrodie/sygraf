@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} :: Gestion des districts{% endblock %}
+{% block body %}
+    <div class="row clearfix">
+        <div class="col-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Liste des districts</h2>
+                    <ul class="header-dropdown">
+                        <li><a href="javascript:void(0);" class="btn btn-info" data-toggle="modal" data-target="#addcontact">Modifer</a></li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <div class="row">
+                        <div class="col-12">
+                            {% for message in app.flashes('notice') %}
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <i class="fa fa-thumbs-up"></i> {{ message }}
+                                </div>
+                            {% endfor %}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <i class="fa fa-exclamation-triangle"></i> {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover js-basic-example dataTable table-custom table-striped m-b-0 c_list">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">REGIONS</th>
+                                <th class="text-center">TYPES</th>
+                                <th class="text-center">LIEUX</th>
+                                <th class="text-center">PROMOTIONS</th>
+                                <th class="text-center">PERIODES</th>
+                                <th class="text-center">STAGIAIRES</th>
+                                <th class="text-center">ACTIONS</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for formation in formations %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>
+                                        {% if (formation.region) %}
+                                            {{ formation.region.libelle }}
+                                        {% else %}
+                                            NATION
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ formation.type.libelle }}</td>
+                                    <td>{{ formation.lieu }}</td>
+                                    <td>{{ formation.promotion }}</td>
+                                    <td class="text-center">{{ formation.debut|date('d-m-Y') }} au {{ formation.fin|date('d-m-Y') }}</td>
+                                    <td class="text-center">{{ formation.stagiaire }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ path('formation_edit', {'slug': formation.slug}) }}" title="Modifier les information"><i class="fa fa-edit"></i></a>
+                                        {% if formation.stagiaire %}
+                                            | <a href="{{ path('formation_show', {'slug': formation.slug}) }}" title="Liste des stagiaires"><i class="fa fa-list"></i></a>
+                                        {% endif %}
+                                        | <a href="#" title="Enregistrer des stagiaires"><i class="fa fa-plus"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal animated zoomIn" id="addcontact" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="title" id="defaultModalLabel">Nouvelle formation</h6>
+                </div>
+                {{ form_start(edit_form) }}
+                <div class="modal-body">
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <span>Région</span>
+                                {{ form_widget(edit_form.region) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <span>Type</span>
+                                {{ form_widget(edit_form.type) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                {{ form_widget(edit_form.lieu) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                {{ form_widget(edit_form.promotion) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group input-daterange input-group" data-provide="datepicker">
+                                {{ form_widget(edit_form.debut) }}
+                                <span class="input-group-addon text-center" style="width: 40px;">à</span>
+                                {{ form_widget(edit_form.fin) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="ajouter">Modifier</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+                {{ form_end(edit_form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('assets/bundles/datatablescripts.bundle.js')) }}"></script>
+    <script src="{{ asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ absolute_url(asset('assets/bundles/mainscripts.bundle.js')) }}"></script>
+    <script src="{{ asset('assets/js/pages/tables/jquery-datatable.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/ui/dialogs.js') }}"></script>
+    <script src="{{ asset('assets/vendor/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+        $('.select2').select2();
+        $(document).ready(function(){
+            $('#ajouter').click(function () {
+                if (document.getElementById('appbundle_formation_lieu').value !== ''){
+                    //
+                    document.getElementById('ajouter').innerHTML = 'Veuillez-patienter, enregistrement encours ...';
+                    //$(this).attr('visibility', 'hidden')
+                    document.setTimeout(function () {
+                        $(this).attr('disabled', 'disabled')
+                    }, 2);
+                }
+
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Formations list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Promotion</th>
+                <th>Lieu</th>
+                <th>Debut</th>
+                <th>Fin</th>
+                <th>Slug</th>
+                <th>Publiepar</th>
+                <th>Modifiepar</th>
+                <th>Publiele</th>
+                <th>Modifiele</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formation in formations %}
+            <tr>
+                <td><a href="{{ path('formation_show', { 'id': formation.id }) }}">{{ formation.id }}</a></td>
+                <td>{{ formation.promotion }}</td>
+                <td>{{ formation.lieu }}</td>
+                <td>{{ formation.debut }}</td>
+                <td>{{ formation.fin }}</td>
+                <td>{{ formation.slug }}</td>
+                <td>{{ formation.publiePar }}</td>
+                <td>{{ formation.modifiePar }}</td>
+                <td>{{ formation.publieLe }}</td>
+                <td>{{ formation.modifieLe }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('formation_show', { 'id': formation.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('formation_edit', { 'id': formation.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('formation_new') }}">Create a new formation</a>
+        </li>
+    </ul>
+{% endblock %}
