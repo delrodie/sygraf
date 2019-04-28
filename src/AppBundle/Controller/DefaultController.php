@@ -13,9 +13,16 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
+        $em = $this->getDoctrine()->getManager();
+        // Nombre des certificats en stock
+        $cep = $em->getRepository('AppBundle:Certificat')->findNombre('C',0);
+        $prebadge = $em->getRepository('AppBundle:Certificat')->findNombre('B',0);
+        $badge = $em->getRepository('AppBundle:Certificat')->findNombre('A',0);
         return $this->render('default/index.html.twig', [
             'current_page' => 'accueil',
+            'cep' => $cep,
+            'prebadge' => $prebadge,
+            'badge' => $badge
         ]);
     }
 }

@@ -34,4 +34,39 @@ class CertificatRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery()->getResult()
             ;
     }
+
+    /**
+     * Nombre de certificats en fonction de la formation
+     * @uses by DefaultController:indexAction()
+     */
+    public function findNombre($formation, $flag, $region = null)
+    {
+        if (!$region){
+            return $this->createQueryBuilder('c')
+                        ->select('count(c.id)')
+                        ->innerJoin('c.formation', 'f')
+                        ->where('f.code = :formation')
+                        ->andWhere('c.flag = :flag')
+                        ->setParameters([
+                            'formation' => $formation,
+                            'flag' =>  $flag
+                        ])
+                        ->getQuery()->getSingleScalarResult()
+                ;
+        } else{
+            return $this->createQueryBuilder('c')
+                ->select('count(c.id)')
+                ->innerJoin('c.formation', 'f')
+                ->where('f.code = :formation')
+                ->andWhere('c.flag = :flag')
+                ->andWhere('c.region = :region')
+                ->setParameters([
+                    'formation'=> $formation,
+                    'flag' => $flag,
+                    'region' => $region
+                ])
+                ->getQuery()->getSingleScalarResult()
+                ;
+        }
+    }
 }
