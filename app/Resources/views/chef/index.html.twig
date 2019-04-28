@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Chefs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Matricule</th>
+                <th>Nom</th>
+                <th>Prenoms</th>
+                <th>Datenais</th>
+                <th>Lieunais</th>
+                <th>Email</th>
+                <th>Tel</th>
+                <th>Formation</th>
+                <th>Profession</th>
+                <th>Domicile</th>
+                <th>Classe</th>
+                <th>Imagename</th>
+                <th>Imagesize</th>
+                <th>Updatedat</th>
+                <th>Slug</th>
+                <th>Publiepar</th>
+                <th>Modifiepar</th>
+                <th>Publiele</th>
+                <th>Modifiele</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chef in chefs %}
+            <tr>
+                <td><a href="{{ path('chef_show', { 'id': chef.id }) }}">{{ chef.id }}</a></td>
+                <td>{{ chef.matricule }}</td>
+                <td>{{ chef.nom }}</td>
+                <td>{{ chef.prenoms }}</td>
+                <td>{{ chef.datenais }}</td>
+                <td>{{ chef.lieunais }}</td>
+                <td>{{ chef.email }}</td>
+                <td>{{ chef.tel }}</td>
+                <td>{{ chef.formation }}</td>
+                <td>{{ chef.profession }}</td>
+                <td>{{ chef.domicile }}</td>
+                <td>{{ chef.classe }}</td>
+                <td>{{ chef.imageName }}</td>
+                <td>{{ chef.imageSize }}</td>
+                <td>{% if chef.updatedAt %}{{ chef.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ chef.slug }}</td>
+                <td>{{ chef.publiePar }}</td>
+                <td>{{ chef.modifiePar }}</td>
+                <td>{{ chef.publieLe }}</td>
+                <td>{{ chef.modifieLe }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('chef_show', { 'id': chef.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('chef_edit', { 'id': chef.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('chef_new') }}">Create a new chef</a>
+        </li>
+    </ul>
+{% endblock %}

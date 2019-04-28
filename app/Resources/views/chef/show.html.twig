@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} :: Gestion des chefs{% endblock %}
+{% block body %}
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12">
+            <div class="card client-detail">
+                <div class="body">
+                    <div class="profile-image">
+                        <img src="{{ asset('uploads/profiles/'~ chef.imageName) | imagine_filter('chef_profile') }}" alt="{{ chef.nom }} {{ chef.prenoms }}">
+                    </div>
+                    <div class="details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="m-t-0 m-b-0"><strong>{{ chef.prenoms }}</strong> {{ chef.nom }}</h4>
+                                <span class="job_post">{{ chef.profession }}</span><br>
+                                <span>{{ chef.datenais|date('d/m/Y') }} à {{ chef.lieunais }}</span><br>
+                                <span>{{ chef.formation }}</span><br>
+                                <span>{{ chef.email }}</span><br>
+                                <span>{{ chef.tel }}</span> <br>
+
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="m-t-0 m-b-0"><u><strong>Renseignement</strong> SCOUT</u></h4>
+                                    <span class="job_post">Chef de groupe </span><br>
+                                    <span class="job_post">{{ chef.region.libelle }}<br>
+                                    <span>Saint Jean de Cocody</span><br>
+                                    <span>2012, Saint Kizito d'Abengourou</span><br>
+                                    <span>2012, Christ Roi de l'Univers d'Abengourou</span><br>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Fonctions</h2>
+                </div>
+                <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-hover m-b-0">
+                            <thead>
+                            <tr>
+                                <th>Fonction</th>
+                                <th>Periode</th>
+                                <th>Groupe</th>
+                                <th>District</th>
+                                <th>Region</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Chef de groupe</td>
+                                <td><span>2009-2012</span></td>
+                                <td>Saint Jean de Cocody</td>
+                                <td>Abidjan Plateau</td>
+                                <td>Abidjan</td>
+                            </tr>
+                            <tr>
+                                <td>ACR Communication</td>
+                                <td><span>2012-2014</span></td>
+                                <td></td>
+                                <td></td>
+                                <td>Abidjan</td>
+                            </tr>
+                            <tr>
+                                <td>ACR Communication</td>
+                                <td><span>2015-2019</span></td>
+                                <td></td>
+                                <td></td>
+                                <td>Abidjan</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Stages suivis</h2>
+                </div>
+                <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-hover m-b-0">
+                            <tbody>
+                            <tr>
+                                <td>CEP</td>
+                                <td><span>2012</span></td>
+                                <td>Abidjan</td>
+                            </tr>
+                            <tr>
+                                <td>CEP</td>
+                                <td><span>2012</span></td>
+                                <td>Abidjan</td>
+                            </tr>
+                            <tr>
+                                <td>CEP</td>
+                                <td><span>2012</span></td>
+                                <td>Abidjan</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Grands rassemblements</h2>
+                </div>
+                <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-hover m-b-0">
+                            <tbody>
+                            <tr>
+                                <td>Jamboree</td>
+                                <td><span>2012</span>, Abidjan</td>
+                                <td>Chef de camp</td>
+                            </tr>
+                            <tr>
+                                <td>Jambognan</td>
+                                <td><span>2019</span></td>
+                                <td>San Pedro</td>
+                            </tr>
+                            <tr>
+                                <td>Yeyawa</td>
+                                <td><span>2016</span></td>
+                                <td>Yamoussoukro</td>
+                            </tr>
+                            <tr>
+                                <td>Yeyawa</td>
+                                <td><span>2016</span></td>
+                                <td>Yamoussoukro</td>
+                            </tr>
+                            <tr>
+                                <td>Yeyawa</td>
+                                <td><span>2016</span></td>
+                                <td>Yamoussoukro</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
+{% endblock %}

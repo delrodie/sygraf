@@ -109,6 +109,15 @@ vich_uploader:
             delete_on_update:   true
             delete_on_remove:   true
 
+        chef_image:
+            uri_prefix:         /uploads/profiles
+            upload_destination: '%kernel.root_dir%/../web/uploads/profiles'
+            namer: vich_uploader.namer_uniqid
+
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+
 liip_imagine:
     resolvers:
         default:
@@ -126,6 +135,17 @@ liip_imagine:
                 # create a 2px black border: center the thumbnail on a black background
                 # 4px larger to create a 2px border around the final image
                 background: { size: [52, 52], position: center, color: '#ffffff'}
+
+
+        chef_profile:
+            quality: 100
+            filters:
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail: { size: [140, 140], mode: inset }
+                # create a 2px black border: center the thumbnail on a black background
+                # 4px larger to create a 2px border around the final image
+                background: { size: [142, 142], position: center, color: '#ffffff'}
 
         base_thumb_w:
             quality: 100

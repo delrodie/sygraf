@@ -49,14 +49,14 @@ class Base
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="base_image", fileNameProperty="imageName", size="imageSize")
+     * @Vich\UploadableField(mapping="base_image", fileNameProperty="imageName", size="imageSize", nullable=true)
      *
      * @var File
      */
     private $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string
      */
@@ -70,7 +70,7 @@ class Base
     private $imageSize;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true )
      *
      * @var \DateTime
      */

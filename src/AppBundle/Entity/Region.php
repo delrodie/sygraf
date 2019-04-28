@@ -49,6 +49,13 @@ class Region
     private $certificats;
 
     /**
+     * Il y a plusieurs chefs dans une région
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Chef", mappedBy="region")
+     */
+    private $chefs;
+
+    /**
      * @var string
      *
      * @Gedmo\Slug(fields={"libelle"})
@@ -340,5 +347,39 @@ class Region
     public function getCertificats()
     {
         return $this->certificats;
+    }
+
+    /**
+     * Add chef
+     *
+     * @param \AppBundle\Entity\Chef $chef
+     *
+     * @return Region
+     */
+    public function addChef(\AppBundle\Entity\Chef $chef)
+    {
+        $this->chefs[] = $chef;
+
+        return $this;
+    }
+
+    /**
+     * Remove chef
+     *
+     * @param \AppBundle\Entity\Chef $chef
+     */
+    public function removeChef(\AppBundle\Entity\Chef $chef)
+    {
+        $this->chefs->removeElement($chef);
+    }
+
+    /**
+     * Get chefs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChefs()
+    {
+        return $this->chefs;
     }
 }
