@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Form\ParticiperType;
+
 /**
  * CertificatRepository
  *
@@ -66,6 +68,31 @@ class CertificatRepository extends \Doctrine\ORM\EntityRepository
                     'region' => $region
                 ])
                 ->getQuery()->getSingleScalarResult()
+                ;
+        }
+    }
+
+    /**
+     * Liste des certificats concernés par le camp
+     * @uses ParticiperType
+     */
+    public function liste($region, $level)
+    { //dump($level);die();
+        if ($level == 'A'){
+            return $this->createQueryBuilder('c')
+                ->andWhere('c.code LIKE :level')
+                ->andWhere('c.flag = 0')
+                ->setParameter('level', '%'.$level)
+                ;
+        }else{
+            return $this->createQueryBuilder('c')
+                ->where('c.region = :region')
+                ->andWhere('c.code LIKE :level')
+                ->andWhere('c.flag = 1')
+                ->setParameters([
+                    'region'=> $region,
+                    'level'=> '%'.$level,
+                ])
                 ;
         }
     }

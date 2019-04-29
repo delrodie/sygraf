@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Form\ParticiperType;
+
 /**
  * ChefRepository
  *
@@ -21,5 +23,23 @@ class ChefRepository extends \Doctrine\ORM\EntityRepository
                     ->addOrderBy('c.prenoms', 'ASC')
                     ->getQuery()->getResult()
             ;
+    }
+
+    /**
+     * Liste des stagiaires
+     * @uses ParticiperType
+     */
+    public function listeStagiares($region, $level)
+    {
+        if ($level == 'C'){
+            return $this->createQueryBuilder('c')
+                        ->innerJoin('c.region', 'r')
+                        ->where('r.id = :region')
+                        ->andWhere('c.classe is NULL')
+                        ->orderBy('c.nom', 'ASC')
+                        ->addOrderBy('c.prenoms', 'ASC')
+                        ->setParameter('region', $region)
+                ;
+        }
     }
 }

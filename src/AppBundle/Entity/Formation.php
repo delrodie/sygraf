@@ -53,7 +53,7 @@ class Formation
     /**
      * @var integer
      *
-     * @ORM\Column(name="stagaire", type="integer", nullable=true, options={"default": 0})
+     * @ORM\Column(name="stagiaire", type="integer", nullable=true, options={"default": 0})
      */
     private $stagiaire;
 

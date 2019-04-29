@@ -6,7 +6,11 @@
             <div class="card client-detail">
                 <div class="body">
                     <div class="profile-image">
-                        <img src="{{ asset('uploads/profiles/'~ chef.imageName) | imagine_filter('chef_profile') }}" alt="{{ chef.nom }} {{ chef.prenoms }}">
+                        {% if chef.imageName %}
+                            <img src="{{ asset('uploads/profiles/'~ chef.imageName) | imagine_filter('chef_profile') }}" alt="{{ chef.nom }} {{ chef.prenoms }}">
+                        {% else %}
+                            <img src="{{ asset('assets/images/profile.png') | imagine_filter('chef_profile') }}" alt="{{ chef.nom }} {{ chef.prenoms }}">
+                        {% endif %}
                     </div>
                     <div class="details">
                         <div class="row">

@@ -71,11 +71,18 @@ class FormationController extends Controller
      */
     public function showAction(Formation $formation)
     {
+
+        // Liste des chefs concernés pas le camp
+        $em = $this->getDoctrine()->getManager();
+        $participants = $em->getRepository('AppBundle:Participer')->findListAsc($formation->getSlug());
+        //dump($participants);die();
         $deleteForm = $this->createDeleteForm($formation);
 
         return $this->render('formation/show.html.twig', array(
             'formation' => $formation,
             'delete_form' => $deleteForm->createView(),
+            'current_page' => 'formation',
+            'participants' => $participants,
         ));
     }
 

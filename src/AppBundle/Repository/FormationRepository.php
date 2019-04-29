@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Controller\FormationController;
+use AppBundle\Form\ParticiperType;
 
 /**
  * FormationRepository
@@ -30,5 +31,17 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
                         ->getQuery()->getResult()
                 ;
         }
+    }
+
+    /**
+     * La fonration concernée par le camp
+     * @uses ParticiperType
+     */
+    public function findUnique($formation)
+    {
+        return $this->createQueryBuilder('f')
+                    ->where('f.slug = :formation')
+                    ->setParameter('formation', $formation)
+            ;
     }
 }

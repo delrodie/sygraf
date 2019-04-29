@@ -1,64 +1,101 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Liste des stagiaires du camp {{ formation.type.libelle }} {{ formation.debut|date('Y') }} à {{ formation.lieu }}{% endblock %}
 {% block body %}
-    <h1>Formation</h1>
+    <div class="row clearfix">
+        <div class="col-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Liste des stagiaires</h2>
+                </div>
+                <div class="body">
+                    <div class="row">
+                        <div class="col-12">
+                            {% for message in app.flashes('notice') %}
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <i class="fa fa-thumbs-up"></i> {{ message }}
+                                </div>
+                            {% endfor %}
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <i class="fa fa-exclamation-triangle"></i> {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">REGIONS</th>
+                                <th class="text-center">CERTIFICATS</th>
+                                <th class="text-center">MATRICULES</th>
+                                <th class="text-center">NOMS & PRENOMS</th>
+                                <th class="text-center">DATE NAISS</th>
+                                <th class="text-center">TELEPHONES</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for participant in participants %}
+                                <tr>
+                                    <td class="text-right">{{ loop.index }}</td>
+                                    <td>{{ participant.chef.region.libelle }}</td>
+                                    <td class="text-center">{{ participant.certificat.code }}</td>
+                                    <td class="text-center">{{ participant.chef.matricule }}</td>
+                                    <td>{{ participant.chef.nom|upper }} {{ participant.chef.prenoms }}</td>
+                                    <td class="text-center">{{ participant.chef.datenais|date('d-m-Y') }}</td>
+                                    <td class="text-center">{{ participant.chef.tel }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
+{% endblock %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ formation.id }}</td>
-            </tr>
-            <tr>
-                <th>Promotion</th>
-                <td>{{ formation.promotion }}</td>
-            </tr>
-            <tr>
-                <th>Lieu</th>
-                <td>{{ formation.lieu }}</td>
-            </tr>
-            <tr>
-                <th>Debut</th>
-                <td>{{ formation.debut }}</td>
-            </tr>
-            <tr>
-                <th>Fin</th>
-                <td>{{ formation.fin }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ formation.slug }}</td>
-            </tr>
-            <tr>
-                <th>Publiepar</th>
-                <td>{{ formation.publiePar }}</td>
-            </tr>
-            <tr>
-                <th>Modifiepar</th>
-                <td>{{ formation.modifiePar }}</td>
-            </tr>
-            <tr>
-                <th>Publiele</th>
-                <td>{{ formation.publieLe }}</td>
-            </tr>
-            <tr>
-                <th>Modifiele</th>
-                <td>{{ formation.modifieLe }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('assets/bundles/datatablescripts.bundle.js')) }}"></script>
+    <script src="{{ asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ absolute_url(asset('assets/bundles/mainscripts.bundle.js')) }}"></script>
+    <script src="{{ asset('assets/js/pages/tables/jquery-datatable.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/ui/dialogs.js') }}"></script>
+    <script src="{{ asset('assets/vendor/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-datatable/buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-datatable/buttons/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-datatable/buttons/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-datatable/buttons/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-datatable/buttons/buttons.print.min.js') }}"></script>
+    <script>
+        $('.select2').select2();
+        $('.inline-datepicker').datepicker({
+            todayHighlight: true
+        });
+        $(document).ready(function(){
+            $('#ajouter').click(function () {
+                if (document.getElementById('appbundle_chef_matricule').value !== ''){
+                    //
+                    document.getElementById('ajouter').innerHTML = 'Veuillez-patienter, enregistrement encours ...';
+                    //$(this).attr('visibility', 'hidden')
+                    document.setTimeout(function () {
+                        $(this).attr('disabled', 'disabled')
+                    }, 2);
+                }
 
-    <ul>
-        <li>
-            <a href="{{ path('formation_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('formation_edit', { 'id': formation.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            });
+        });
+    </script>
 {% endblock %}
