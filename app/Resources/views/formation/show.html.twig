@@ -34,6 +34,7 @@
                                 <th class="text-center">MATRICULES</th>
                                 <th class="text-center">NOMS & PRENOMS</th>
                                 <th class="text-center">DATE NAISS</th>
+                                <th class="text-center">SEXE</th>
                                 <th class="text-center">TELEPHONES</th>
                             </tr>
                             </thead>
@@ -46,6 +47,7 @@
                                     <td class="text-center">{{ participant.chef.matricule }}</td>
                                     <td>{{ participant.chef.nom|upper }} {{ participant.chef.prenoms }}</td>
                                     <td class="text-center">{{ participant.chef.datenais|date('d-m-Y') }}</td>
+                                    <td class="text-center">{{ participant.chef.sexe }}</td>
                                     <td class="text-center">{{ participant.chef.tel }}</td>
                                 </tr>
                             {% endfor %}

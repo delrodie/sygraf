@@ -23,6 +23,7 @@ class DefaultController extends Controller
         $nombre_chef = $em->getRepository('AppBundle:Chef')->findNombreNational();
         $chef_femme = $em->getRepository('AppBundle:Chef')->findNombreNational('F');
         $chef_homme = $em->getRepository('AppBundle:Chef')->findNombreNational('M');
+        if (!$nombre_chef) $nombre_chef = 1;
         $homme = round(($chef_homme*100)/$nombre_chef, 0);
         $femme = round(($chef_femme*100)/$nombre_chef);
 

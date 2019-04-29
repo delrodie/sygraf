@@ -35,8 +35,8 @@
                                 <th class="text-center">REGIONS</th>
                                 <th class="text-center">MATRICULES</th>
                                 <th class="text-center">NOMS</th>
-                                <th class="text-center">DATES NAISS</th>
-                                <th class="text-center">LIEUX NAISS</th>
+                                <th class="text-center">NAISSANCES</th>
+                                <th class="text-center">SEXES</th>
                                 <th class="text-center">LEVELS</th>
                                 <th class="text-center">ACTIONS</th>
                             </tr>
@@ -48,8 +48,8 @@
                                     <td>{{ chef.region.libelle }}</td>
                                     <td class="text-center">{{ chef.matricule }}</td>
                                     <td>{{ chef.nom }} {{ chef.prenoms }}</td>
-                                    <td class="text-center">{{ chef.datenais|date('d-m-Y') }}</td>
-                                    <td>{{ chef.lieunais }}</td>
+                                    <td class="text-center">{{ chef.datenais|date('d-m-Y') }} à {{ chef.lieunais }}</td>
+                                    <td class="text-center">{{ chef.sexe }}</td>
                                     <td class="text-center">
                                         {% if (chef.classe == 'A') %}
                                            <span class="badge badge-success">BADGE</span>
@@ -61,7 +61,7 @@
                                             -
                                         {% endif %}
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="{{ path('chef_edit', {'slug': chef.slug}) }}"><i class="fa fa-edit"></i></a> |
                                         <a href="{{ path('chef_show', {'slug': chef.slug}) }}"><i class="fa fa-eye"></i></a>
                                     </td>
