@@ -40,7 +40,7 @@ class ParticiperController extends Controller
      */
     public function newAction(Request $request, $region, $level, $formation, ParticiperUtilities $utilities)
     {
-        $participer = new Participer(); //dump($formation);die();
+        $participer = new Participer(); //dump($region);die();
         $form = $this->createForm('AppBundle\Form\ParticiperType', $participer, ['region'=>$region, 'level'=>$level, 'formation'=>$formation]);
         $form->handleRequest($request);
 
@@ -62,7 +62,7 @@ class ParticiperController extends Controller
         }
         // Liste des chefs concernés pas le camp
         $em = $this->getDoctrine()->getManager();
-        $participants = $em->getRepository('AppBundle:Participer')->findListDesc($formation);
+        $participants = $em->getRepository('AppBundle:Participer')->findListDesc($formation); //dump($participants);die();
 
         return $this->render('participer/new.html.twig', array(
             'participer' => $participer,

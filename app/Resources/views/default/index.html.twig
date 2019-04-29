@@ -32,17 +32,21 @@
 		<div class="col-lg-3 col-md-6">
 			<div class="card text-center">
 				<div class="body">
-					<div class="sparkline-pie m-t-20">6,4,8</div>
+					<div class="sparkline-pie m-t-20">{{ nombreCEP }},{{ nombrePrebadge }},{{ nombreBadge }}</div>
 					<div class="stats-report m-b-30">
 						<div class="stat-item">
 							<h5>CEP</h5>
-							<b class="col-black">84.60%</b></div>
+							<b class="col-black">{{ pourcentageCEP }}%</b></div>
 						<div class="stat-item">
 							<h5>PREBADGE</h5>
-							<b class="col-black">15.40%</b></div>
+							<b class="col-black">{{ pourcentagePrebadge }}%</b></div>
 						<div class="stat-item">
 							<h5>BADGE</h5>
-							<b class="col-black">5.10%</b></div>
+							<b class="col-black">{{ pourcentageBadge }}%</b></div>
+					</div>
+					<hr>
+					<div class="text-center">
+						<em>Statistique des chefs formés</em>
 					</div>
 				</div>
 			</div>
@@ -56,11 +60,11 @@
 					<div class="row">
 						<div class="col-md-6 col-xs-6">
 							<h6>Hommes</h6>
-							<input type="text" class="knob2" data-linecap="round" value="73" data-width="125" data-height="125" data-thickness="0.15" data-fgColor="#49a9e5" readonly>
+							<input type="text" class="knob2" data-linecap="round" value="{{ nombreHomme }}" data-width="125" data-height="125" data-thickness="0.15" data-fgColor="#49a9e5" readonly>
 						</div>
 						<div class="col-md-6 col-xs-6">
 							<h6>Femmes</h6>
-							<input type="text" class="knob2" data-linecap="round" value="27" data-width="125" data-height="125" data-thickness="0.15" data-fgColor="#b880e1" readonly>
+							<input type="text" class="knob2" data-linecap="round" value="{{ nombreFemme }}" data-width="125" data-height="125" data-thickness="0.15" data-fgColor="#b880e1" readonly>
 						</div>
 					</div>
 
@@ -84,39 +88,19 @@
 								<th class="text-center">CEP</th>
 								<th class="text-center">PREBADGE</th>
 								<th class="text-center">BADGE</th>
-								<th class="text-center">3 BUCHETTES</th>
-								<th class="text-center">4 BUCHETTES</th>
 								<th class="text-center">TOTAL</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr>
-								<td class="text-center">ABENGOUROU</td>
-								<td class="text-center">25</td>
-								<td class="text-center"><span>23</span></td>
-								<td class="text-center"><span>34</span></td>
-								<td class="text-center"><span>32</span></td>
-								<td class="text-center"><span>32</span></td>
-								<td class="text-center"><strong>322</strong></td>
-							</tr>
-							<tr>
-								<td class="text-center">ABENGOUROU</td>
-								<td class="text-center">25</td>
-								<td class="text-center"><span>23</span></td>
-								<td class="text-center"><span>34</span></td>
-								<td class="text-center"><span>32</span></td>
-								<td class="text-center"><span>32</span></td>
-								<td class="text-center"><strong>322</strong></td>
-							</tr>
-							<tr>
-								<td class="text-center">ABENGOUROU</td>
-								<td class="text-center">25</td>
-								<td class="text-center"><span>23</span></td>
-								<td class="text-center"><span>34</span></td>
-								<td class="text-center"><span>32</span></td>
-								<td class="text-center"><span>32</span></td>
-								<td class="text-center"><strong>322</strong></td>
-							</tr>
+							{% for region in regions %}
+								<tr>
+									<td class="text-left">{{ region.libelle|upper }}</td>
+									<td class="text-center">{{ render(url('statitisque_region',{'level': 'C', 'region': region.id})) }}</td>
+									<td class="text-center"><span>{{ render(url('statitisque_region',{'level': 'B', 'region': region.id})) }}</span></td>
+									<td class="text-center"><span>{{ render(url('statitisque_region',{'level': 'A', 'region': region.id})) }}</span></td>
+									<td class="text-center"><strong>{{ render(url('statistique_totaux',{'region': region.id})) }}</strong></td>
+								</tr>
+							{% endfor %}
 							</tbody>
 						</table>
 					</div>

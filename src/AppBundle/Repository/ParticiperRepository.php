@@ -18,7 +18,7 @@ class ParticiperRepository extends \Doctrine\ORM\EntityRepository
      * @uses ParticiperController::newAction()
      */
     public function findListDesc($formation)
-    {
+    { //dump($formation);die();
         return $this->queryList($formation)->orderBy('p.id', 'DESC')->getQuery()->getResult();
     }
 

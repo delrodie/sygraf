@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Controller\DefaultController;
 use AppBundle\Form\ParticiperType;
 
 /**
@@ -43,28 +44,79 @@ class ChefRepository extends \Doctrine\ORM\EntityRepository
         }elseif ($level == 'B'){
             return $this->createQueryBuilder('c')
                         ->innerJoin('c.region', 'r')
-                        ->where('r.id = :region')
-                        ->andWhere('c.classe <> :A')
-                        ->andWhere('c.classe <> :B')
+                        ->Where('c.classe = :c')
+                        //->orWhere('c.classe <> :B')
+                        ->orWhere('c.classe is null')
+                        ->andWhere('r.id = :region')
                         ->orderBy('c.nom', 'ASC')
                         ->addOrderBy('c.prenoms', 'ASC')
                         ->setParameters([
                             'region'=> $region,
-                            'A'=> 'A',
-                            'B'=> 'B'
+                            //'A'=> 'A',
+                            'c'=> 'C'
                         ])
                 ;
         }else{
             return $this->createQueryBuilder('c')
                         //->innerJoin('c.region', 'r')
                         //->where('r.id = :region')
-                        ->where('c.classe <> :A')
+                        ->where('c.classe <> :a')
+                        ->orWhere('c.classe is null')
                         ->orderBy('c.nom', 'ASC')
                         ->addOrderBy('c.prenoms', 'ASC')
                         ->setParameters([
                             //'region'=> $region,
-                            'A'=> 'A',
+                            'a'=> 'A',
                         ])
+                ;
+        }
+    }
+
+    /**
+     * Nombre de chef
+     * @uses DefaultController::indexAction()
+     */
+    public function findNombreNational($sexe = null)
+    {
+        if (!$sexe){
+            return $this->createQueryBuilder('c')
+                        ->select('count(c.id)')
+                        ->getQuery()->getSingleScalarResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('c')
+                        ->select('count(c.id)')
+                        ->where('c.sexe = :sexe')
+                        ->setParameter('sexe', $sexe)
+                        ->getQuery()->getSingleScalarResult()
+                ;
+        }
+    }
+
+    /**
+     * Nombre de chef selon la formation
+     * @uses DefaultController::indexAction()
+     * @uses DefaultController::formationAction()
+     */
+    public function findNombreByClasse($level, $region = null)
+    {
+        if (!$region){
+            return $this->createQueryBuilder('c')
+                        ->select('count(c.id)')
+                        ->where('c.classe = :level')
+                        ->setParameter('level', $level)
+                        ->getQuery()->getSingleScalarResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('c')
+                        ->select('count(c.id)')
+                        ->where('c.classe = :level')
+                        ->andWhere('c.region = :region')
+                        ->setParameters([
+                            'level' => $level,
+                            'region' => $region
+                        ])
+                        ->getQuery()->getSingleScalarResult()
                 ;
         }
     }
