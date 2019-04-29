@@ -63,6 +63,13 @@ class Chef
     /**
      * @var string
      *
+     * @ORM\Column(name="sexe", type="string", length=255, nullable=true)
+     */
+    private $sexe;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
@@ -703,5 +710,29 @@ class Chef
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * Set sexe
+     *
+     * @param string $sexe
+     *
+     * @return Chef
+     */
+    public function setSexe($sexe)
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * Get sexe
+     *
+     * @return string
+     */
+    public function getSexe()
+    {
+        return $this->sexe;
     }
 }

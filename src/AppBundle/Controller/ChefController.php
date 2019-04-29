@@ -71,12 +71,16 @@ class ChefController extends Controller
      */
     public function showAction(Chef $chef)
     {
+        $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($chef);
+
+        $participations = $em->getRepository('AppBundle:Participer')->findBy(['chef'=>$chef->getId()]);
 
         return $this->render('chef/show.html.twig', array(
             'chef' => $chef,
             'delete_form' => $deleteForm->createView(),
-            'current_page' => 'chef'
+            'current_page' => 'chef',
+            'participations' => $participations,
         ));
     }
 
@@ -95,13 +99,19 @@ class ChefController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('chef_edit', array('id' => $chef->getId()));
+            return $this->redirectToRoute('chef_show', array('slug' => $chef->getSlug()));
         }
+
+        // Liste ordonnée des chefs
+        $em = $this->getDoctrine()->getManager();
+        $chefs = $em->getRepository('AppBundle:Chef')->findListeOrd();
 
         return $this->render('chef/edit.html.twig', array(
             'chef' => $chef,
+            'chefs' => $chefs,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'current_page'=> 'chef'
         ));
     }
 

@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,6 +44,14 @@ class ChefType extends AbstractType
             ])
             ->add('profession', TextType::class,[
                 'attr'=>['class'=>'form-control', 'autocomplete'=>'off', 'placeholder'=>'Profession'], 'required'=> false
+            ])
+            ->add('sexe', ChoiceType::class, [
+                'choices' => [
+                    '-- Selectionnez le sexe --' => '',
+                    'Homme' => 'M',
+                    'Femme' => 'F'
+                ],
+                'attr' => ['class'=> 'form-control'],
             ])
             /*->add('domicile', TextType::class,[
                 'attr'=>['class'=>'form-control', 'autocomplete'=>'off', 'placeholder'=>'Lieu de residence'], 'required'=> false

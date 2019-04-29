@@ -40,6 +40,32 @@ class ChefRepository extends \Doctrine\ORM\EntityRepository
                         ->addOrderBy('c.prenoms', 'ASC')
                         ->setParameter('region', $region)
                 ;
+        }elseif ($level == 'B'){
+            return $this->createQueryBuilder('c')
+                        ->innerJoin('c.region', 'r')
+                        ->where('r.id = :region')
+                        ->andWhere('c.classe <> :A')
+                        ->andWhere('c.classe <> :B')
+                        ->orderBy('c.nom', 'ASC')
+                        ->addOrderBy('c.prenoms', 'ASC')
+                        ->setParameters([
+                            'region'=> $region,
+                            'A'=> 'A',
+                            'B'=> 'B'
+                        ])
+                ;
+        }else{
+            return $this->createQueryBuilder('c')
+                        //->innerJoin('c.region', 'r')
+                        //->where('r.id = :region')
+                        ->where('c.classe <> :A')
+                        ->orderBy('c.nom', 'ASC')
+                        ->addOrderBy('c.prenoms', 'ASC')
+                        ->setParameters([
+                            //'region'=> $region,
+                            'A'=> 'A',
+                        ])
+                ;
         }
     }
 }

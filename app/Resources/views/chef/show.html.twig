@@ -21,6 +21,13 @@
                                 <span>{{ chef.formation }}</span><br>
                                 <span>{{ chef.email }}</span><br>
                                 <span>{{ chef.tel }}</span> <br>
+                                <span>
+                                    {% if (chef.sexe == 'F') %}
+                                        Femme
+                                    {% else %}
+                                        Homme
+                                    {% endif %}
+                                </span> <br>
 
                             </div>
                             <div class="col-md-6">
@@ -93,21 +100,19 @@
                     <div class="table-responsive">
                         <table class="table table-hover m-b-0">
                             <tbody>
-                            <tr>
-                                <td>CEP</td>
-                                <td><span>2012</span></td>
-                                <td>Abidjan</td>
-                            </tr>
-                            <tr>
-                                <td>CEP</td>
-                                <td><span>2012</span></td>
-                                <td>Abidjan</td>
-                            </tr>
-                            <tr>
-                                <td>CEP</td>
-                                <td><span>2012</span></td>
-                                <td>Abidjan</td>
-                            </tr>
+                            {% for participation in participations  %}
+                                <tr>
+                                    <td>{{ participation.formation.type.libelle }}</td>
+                                    <td><span>{{ participation.annee }}</span></td>
+                                    <td>
+                                        {% if (participation.formation.region) %}
+                                            {{ participation.formation.region.libelle }}
+                                        {% else %}
+                                            Nation
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
