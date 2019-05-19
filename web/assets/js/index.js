@@ -48,7 +48,7 @@ $(function() {
     // notification popup
     toastr.options.closeButton = true;
     toastr.options.positionClass = 'toast-bottom-right';    
-    toastr['success']('Hello, welcome to Lucid, a unique admin Template.');
+    toastr['success']("Bienvenue sur le Système de Gestion des Ressources Adultes et de la Formation de l'ASCCI");
 });
 
 // top products

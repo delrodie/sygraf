@@ -73,7 +73,7 @@ class ChefRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Nombre de chef
+     * Nombre de chef ayant assité au moins a un stage
      * @uses DefaultController::indexAction()
      */
     public function findNombreNational($sexe = null)
@@ -81,12 +81,14 @@ class ChefRepository extends \Doctrine\ORM\EntityRepository
         if (!$sexe){
             return $this->createQueryBuilder('c')
                         ->select('count(c.id)')
+                        ->where('c.classe IS NOT NULL')
                         ->getQuery()->getSingleScalarResult()
                 ;
         }else{
             return $this->createQueryBuilder('c')
                         ->select('count(c.id)')
                         ->where('c.sexe = :sexe')
+                        ->andWhere('c.classe IS NOT NULL')
                         ->setParameter('sexe', $sexe)
                         ->getQuery()->getSingleScalarResult()
                 ;
