@@ -17,7 +17,7 @@ class FormationType extends AbstractType
     {
         $builder
             ->add('promotion', TextType::class,[
-                'attr'=>['class'=>'form-control', 'autocomplete'=>'off', 'placeholder'=>"Promotion"]
+                'attr'=>['class'=>'form-control', 'autocomplete'=>'off', 'placeholder'=>"Promotion"], 'required'=>false
             ])
             ->add('lieu', TextType::class,[
                 'attr'=>['class'=>'form-control', 'autocomplete'=>'off', 'placeholder'=>"Lieu"]
