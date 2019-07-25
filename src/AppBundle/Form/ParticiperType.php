@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,6 +23,12 @@ class ParticiperType extends AbstractType
         $builder
             //->add('annee')
             //->add('publiePar')->add('modifiePar')->add('publieLe')->add('modifieLe')
+            ->add('fonction', TextType::class,[
+                'attr' =>['class'=>'form-control', 'autocomplete'=>'off', 'placeholder'=>'La fonction du statgiaire']
+            ])
+            ->add('entite', TextType::class,[
+                'attr' =>['class'=>'form-control', 'autocomplete'=>'off', 'placeholder'=>"L'entité dans laquelle le chef assure la fonction"]
+            ])
             ->add('chef', null,[
                 'attr'=>['class'=>'form-control show-tick ms select2'],
                 'class'=>'AppBundle:Chef',

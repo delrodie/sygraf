@@ -18,7 +18,7 @@ class GestionFonction
      */
     public function create($chef,$libelle,$entite,$date)
     {
-        $fonction = new Fonction();
+        $fonction = new Fonction(); //dump($chef);die();
         $fonction->setChef($chef);
         $fonction->setLibelle($libelle);
         $fonction->setEntite($entite);
@@ -49,7 +49,7 @@ class GestionFonction
 
     /**
      * Mise a jour du statut
-     * flag 1 <=> Titularisation / flag 2 <=> formation
+     * flag 1 <=> Formation / flag 2 <=> Titularisation
      * reference <=> id de l'entité concernée
      * use TitularisationCOntroller::new
      */

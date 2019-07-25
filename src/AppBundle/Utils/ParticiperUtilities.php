@@ -6,12 +6,14 @@ namespace AppBundle\Utils;
 
 use AppBundle\Entity\Participer;
 use Doctrine\ORM\EntityManager;
+use AppBundle\Utils\GestionFonction;
 
 class ParticiperUtilities
 {
-    function __construct(EntityManager $entityManager)
+    function __construct(EntityManager $entityManager, GestionFonction $gestionFonction)
     {
         $this->em = $entityManager;
+        $this->gestionFonction = $gestionFonction;
     }
 
     public function create($participer)
@@ -42,7 +44,10 @@ class ParticiperUtilities
         $this->em->persist($certificat);
         $this->em->persist($chef);
         $this->em->persist($formation);
-        $this->em->flush();
+        $this->em->flush(); //dump();die();
+        $this->gestionFonction->create($participant->getChef(), $participer->getFonction(), $participer->getEntite(),$annee);
+        $this->gestionFonction->maj($participant->getChef()->getId(),1,$participant->getId());
+
         return true;
     }
 }

@@ -30,6 +30,20 @@ class Participer
     private $annee;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="fonction", type="string", length=255, nullable=true)
+     */
+    private $fonction;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="entite", type="string", length=255, nullable=true)
+     */
+    private $entite;
+
+    /**
      * Un chef participe a plusieurs camps
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Chef")
@@ -287,5 +301,53 @@ class Participer
     public function getCertificat()
     {
         return $this->certificat;
+    }
+
+    /**
+     * Set fonction
+     *
+     * @param string $fonction
+     *
+     * @return Participer
+     */
+    public function setFonction($fonction)
+    {
+        $this->fonction = $fonction;
+
+        return $this;
+    }
+
+    /**
+     * Get fonction
+     *
+     * @return string
+     */
+    public function getFonction()
+    {
+        return $this->fonction;
+    }
+
+    /**
+     * Set entite
+     *
+     * @param string $entite
+     *
+     * @return Participer
+     */
+    public function setEntite($entite)
+    {
+        $this->entite = $entite;
+
+        return $this;
+    }
+
+    /**
+     * Get entite
+     *
+     * @return string
+     */
+    public function getEntite()
+    {
+        return $this->entite;
     }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Participer;
+use AppBundle\Utils\GestionFonction;
 use AppBundle\Utils\ParticiperUtilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -38,7 +39,7 @@ class ParticiperController extends Controller
      * @Route("/new/{region}/{level}/{formation}", name="participer_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, $region, $level, $formation, ParticiperUtilities $utilities)
+    public function newAction(Request $request, $region, $level, $formation, ParticiperUtilities $utilities, GestionFonction $gestionFonction)
     {
         $participer = new Participer(); //dump($region);die();
         $form = $this->createForm('AppBundle\Form\ParticiperType', $participer, ['region'=>$region, 'level'=>$level, 'formation'=>$formation]);
@@ -50,6 +51,7 @@ class ParticiperController extends Controller
             //$em->flush();
             if ($utilities->create($participer)){
                 $this->addFlash('notice', "Le stagiaire ".$participer->getChef()->getNom().' '.$participer->getChef()->getPrenoms()." a été bien associé à la formation de ". $participer->getFormation()->getLieu());
+                //$gestionFonction->create($participer->getChef(),$participer->getFonction(),$participer->getEntite(),$participer->getFormation()->getDebut());
             }else{
                 $this->addFlash('error', "Le stagiaire ".$participer->getChef()->getNom().' '.$participer->getChef()->getPrenoms()." n'a pas pu être associé à la formation de ". $participer->getFormation()->getLieu());
             }

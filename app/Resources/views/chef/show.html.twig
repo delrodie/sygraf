@@ -31,12 +31,11 @@
 
                             </div>
                             <div class="col-md-6">
-                                <h6 class="m-t-0 m-b-0"><u><strong>Renseignement</strong> SCOUT</u></h4>
-                                    <span class="job_post">Chef de groupe </span><br>
+                                <h6 class="m-t-0 m-b-0"><u><strong>Renseignement</strong> SCOUT</u></h6>
                                     <span class="job_post">{{ chef.region.libelle }}<br>
-                                    <span>Saint Jean de Cocody</span><br>
-                                    <span>2012, Saint Kizito d'Abengourou</span><br>
-                                    <span>2012, Christ Roi de l'Univers d'Abengourou</span><br>
+                                    {% for fonction in chef.fonctions %}
+                                        <span>{{ fonction.dateFonction }}, {{ fonction.libelle }} | {{ fonction.entite }}</span><br>
+                                    {% endfor %}
 
                             </div>
                         </div>
