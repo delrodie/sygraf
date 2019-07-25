@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Titularisation</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ titularisation.id }}</td>
+            </tr>
+            <tr>
+                <th>Datetitu</th>
+                <td>{{ titularisation.dateTitu }}</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ titularisation.lieu }}</td>
+            </tr>
+            <tr>
+                <th>Buchette</th>
+                <td>{{ titularisation.buchette }}</td>
+            </tr>
+            <tr>
+                <th>Publiepar</th>
+                <td>{{ titularisation.publiePar }}</td>
+            </tr>
+            <tr>
+                <th>Modifiepar</th>
+                <td>{{ titularisation.modifiePar }}</td>
+            </tr>
+            <tr>
+                <th>Publiele</th>
+                <td>{{ titularisation.publieLe }}</td>
+            </tr>
+            <tr>
+                <th>Modifiele</th>
+                <td>{{ titularisation.modifieLe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('titularisation_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('titularisation_edit', { 'id': titularisation.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

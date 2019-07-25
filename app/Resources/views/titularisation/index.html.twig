@@ -6,9 +6,6 @@
             <div class="card">
                 <div class="header">
                     <h2>Liste des chefs</h2>
-                    <ul class="header-dropdown">
-                        <li><a href="javascript:void(0);" class="btn btn-info" data-toggle="modal" data-target="#addcontact">Ajouter un nouveau chef</a></li>
-                    </ul>
                 </div>
                 <div class="body">
                     <div class="row">
@@ -37,7 +34,7 @@
                                 <th class="text-center">NOMS</th>
                                 <th class="text-center">NAISSANCES</th>
                                 <th class="text-center">SEXES</th>
-                                <th class="text-center">LEVELS</th>
+                                <th class="text-center">BUCHETTES</th>
                                 <th class="text-center">ACTIONS</th>
                             </tr>
                             </thead>
@@ -51,19 +48,18 @@
                                     <td class="text-center">{{ chef.datenais|date('d-m-Y') }} à {{ chef.lieunais }}</td>
                                     <td class="text-center">{{ chef.sexe }}</td>
                                     <td class="text-center">
-                                        {% if (chef.classe == 'A') %}
-                                           <span class="badge badge-success">BADGE</span>
-                                        {% elseif (chef.classe == 'B') %}
-                                            <span class="badge badge-warning">PREBADGE</span>
-                                        {% elseif (chef.classe == 'C') %}
-                                            <span class="badge badge-danger">CEP</span>
+                                        {% if (chef.buchette == 2) %}
+                                            <span class="badge badge-success">{{ chef.buchette }} bûchettes</span>
+                                        {% elseif (chef.buchette == 3) %}
+                                            <span class="badge badge-warning">{{ chef.buchette }} bûchettes</span>
+                                        {% elseif (chef.buchette == 4) %}
+                                            <span class="badge badge-danger">{{ chef.buchette }} bûchettes</span>
                                         {% else %}
                                             -
                                         {% endif %}
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ path('chef_edit', {'slug': chef.slug}) }}"><i class="fa fa-edit"></i></a> |
-                                        <a href="{{ path('chef_show', {'slug': chef.slug}) }}"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ path('titularisation_new', {'chef': chef.slug}) }}"><i class="fa fa-plus"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -71,100 +67,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal animated zoomIn" id="addcontact" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="title" id="defaultModalLabel">Nouveau chef</h6>
-                </div>
-                {{ form_start(form) }}
-                <div class="modal-body">
-                    <div class="row clearfix">
-                        <h6>Identité civile</h6>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                {{ form_widget(form.region) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                {{ form_widget(form.imageFile) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="form-group">
-                                {{ form_widget(form.sexe) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                {{ form_widget(form.matricule) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                {{ form_widget(form.nom) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="form-group">
-                                {{ form_widget(form.prenoms) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                {{ form_widget(form.datenais) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="form-group">
-                                {{ form_widget(form.lieunais) }}
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <h6 style="margin-top: 25px;">Identité professionnelle</h6>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                {{ form_widget(form.formation) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                {{ form_widget(form.profession) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                {{ form_widget(form.tel) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                {{ form_widget(form.email) }}
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 mt-5">
-                            <div class="form-group">
-                                <label class="fancy-checkbox">
-                                    {{ form_widget(form.titularisation) }}
-                                    <span style="color: #bb0000"><em><b>Cochez si la personne a déjà fait le badge de bois</b></em></span>
-                                </label>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="ajouter">Ajouter</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                </div>
-                {{ form_end(form) }}
             </div>
         </div>
     </div>

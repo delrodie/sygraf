@@ -3,7 +3,9 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Controller\DefaultController;
+use AppBundle\Controller\TitularisationController;
 use AppBundle\Form\ParticiperType;
+use AppBundle\Form\TitularisationType;
 
 /**
  * ChefRepository
@@ -121,5 +123,32 @@ class ChefRepository extends \Doctrine\ORM\EntityRepository
                         ->getQuery()->getSingleScalarResult()
                 ;
         }
+    }
+
+    /**
+     * Liste des chefs ayant fait le badge
+     * @uses TitularisationController::indexAction()
+     */
+    public function findListBadgiste()
+    {
+        return $this->createQueryBuilder('c')
+                    ->where('c.classe = :level')
+                    ->orderBy('c.nom', 'ASC')
+                    ->addOrderBy('c.prenoms', 'ASC')
+                    ->setParameter('level', 'A')
+                    ->getQuery()->getResult()
+            ;
+    }
+
+    /**
+     * Selection du badgiste a titulariser
+     * @uses TitularisationType
+     */
+    public function findBadgiste($chef)
+    {
+        return $this->createQueryBuilder('c')
+                    ->where('c.slug = :chef')
+                    ->setParameter('chef', $chef)
+            ;
     }
 }

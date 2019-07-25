@@ -29,6 +29,8 @@ class ParticiperUtilities
         $level = substr($certificat->getCode(),8,1);
         $chef = $participer->getChef();
         $chef->setClasse($level);
+        // Activation de la titularisation
+        if ($level == 'A'){ $chef->setTitularisation(true);}
         // Ajout d'un stagiaire de plus au nombre de stagiaires concernés par la formation
         $formation = $participer->getFormation();
         $nombre = $formation->getStagiaire() + 1;

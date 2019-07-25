@@ -2,12 +2,55 @@
 {% block title %}{{ parent() }} :: GESTION DES CHEFS{% endblock %}
 {% block body %}
     <div class="row clearfix">
+        <div class="col-lg-12 col-md-12">
+            <div class="card client-detail">
+                <div class="body">
+                    <div class="profile-image">
+                        {% if titulaire.imageName %}
+                            <img src="{{ asset('uploads/profiles/'~ titulaire.imageName) | imagine_filter('chef_profile') }}" alt="{{ titulaire.nom }} {{ titulaire.prenoms }}">
+                        {% else %}
+                            <img src="{{ asset('assets/images/profile.png') | imagine_filter('chef_profile') }}" alt="{{ titulaire.nom }} {{ titulaire.prenoms }}">
+                        {% endif %}
+                    </div>
+                    <div class="details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="m-t-0 m-b-0"><strong>{{ titulaire.prenoms }}</strong> {{ titulaire.nom }}</h4>
+                                <span class="job_post">{{ titulaire.profession }}</span><br>
+                                <span>{{ titulaire.datenais|date('d/m/Y') }} à {{ titulaire.lieunais }}</span><br>
+                                <span>{{ titulaire.formation }}</span><br>
+                                <span>{{ titulaire.email }}</span><br>
+                                <span>{{ titulaire.tel }}</span> <br>
+                                <span>
+                                    {% if (titulaire.sexe == 'F') %}
+                                        Femme
+                                    {% else %}
+                                        Homme
+                                    {% endif %}
+                                </span> <br>
+
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="m-t-0 m-b-0"><u><strong>Renseignement</strong> SCOUT</u></h4>
+                                    <span class="job_post">{{ titulaire.region.libelle }}<br>
+                                        {% for fonction in titulaire.fonctions %}
+                                            <span>{{ fonction.dateFonction }}, {{ fonction.libelle }} | {{ fonction.entite }}</span><br>
+                                        {% endfor %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-12">
             <div class="card">
                 <div class="header">
-                    <h2>Liste des chefs</h2>
+                    <h2>Liste des titularisations</h2>
                     <ul class="header-dropdown">
-                        <li><a href="javascript:void(0);" class="btn btn-info" data-toggle="modal" data-target="#addcontact">Ajouter un nouveau chef</a></li>
+                        <li><a href="javascript:void(0);" class="btn btn-info" data-toggle="modal" data-target="#addcontact">Ajouter la titularisation du chef</a></li>
+                        <li><a href="{{ path('titularisation_index') }}" class="btn btn-warning">Titulariser un autre chef</a></li>
                     </ul>
                 </div>
                 <div class="body">
@@ -22,7 +65,7 @@
                             {% for message in app.flashes('error') %}
                                 <div class="alert alert-danger alert-dismissible" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    <i class="fa fa-exclamation-triangle"></i> {{ message }}
+                                    <i class="fa fa-exclamation-triangle fa-3x"></i> <strong>{{ message }}</strong>
                                 </div>
                             {% endfor %}
                         </div>
@@ -32,38 +75,36 @@
                             <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th class="text-center">REGIONS</th>
-                                <th class="text-center">MATRICULES</th>
-                                <th class="text-center">NOMS</th>
-                                <th class="text-center">NAISSANCES</th>
-                                <th class="text-center">SEXES</th>
-                                <th class="text-center">LEVELS</th>
+                                <th class="text-center">BUCHETTE</th>
+                                <th class="text-center">FONCTIONS</th>
+                                <th class="text-center">ENTITES</th>
+                                <th class="text-center">DATES</th>
+                                <th class="text-center">LIEUX</th>
                                 <th class="text-center">ACTIONS</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for chef in chefs %}
+                            {% for chef in titulaire.titularisations %}
                                 <tr>
                                     <td>{{ loop.index }}</td>
-                                    <td>{{ chef.region.libelle }}</td>
-                                    <td class="text-center">{{ chef.matricule }}</td>
-                                    <td>{{ chef.nom }} {{ chef.prenoms }}</td>
-                                    <td class="text-center">{{ chef.datenais|date('d-m-Y') }} à {{ chef.lieunais }}</td>
-                                    <td class="text-center">{{ chef.sexe }}</td>
                                     <td class="text-center">
-                                        {% if (chef.classe == 'A') %}
-                                           <span class="badge badge-success">BADGE</span>
-                                        {% elseif (chef.classe == 'B') %}
-                                            <span class="badge badge-warning">PREBADGE</span>
-                                        {% elseif (chef.classe == 'C') %}
-                                            <span class="badge badge-danger">CEP</span>
+                                        {% if (chef.buchette == 2) %}
+                                            <span class="badge badge-success">{{ chef.buchette }} bûchettes</span>
+                                        {% elseif (chef.buchette == 3) %}
+                                            <span class="badge badge-warning">{{ chef.buchette }} bûchettes</span>
+                                        {% elseif (chef.buchette == 4) %}
+                                            <span class="badge badge-danger">{{ chef.buchette }} bûchettes</span>
                                         {% else %}
                                             -
                                         {% endif %}
                                     </td>
+                                    <td class="text-center">{{ chef.fonction }}</td>
+                                    <td class="text-center">{{ chef.entite }}</td>
+                                    <td class="text-center">{{ chef.dateTitu|date('d-m-Y') }} </td>
+                                    <td class="text-center">{{ chef.lieu }}</td>
                                     <td class="text-center">
-                                        <a href="{{ path('chef_edit', {'slug': chef.slug}) }}"><i class="fa fa-edit"></i></a> |
-                                        <a href="{{ path('chef_show', {'slug': chef.slug}) }}"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ path('titularisation_edit', {'id': chef.id}) }}"><i class="fa fa-edit"></i></a> |
+                                        <a href="{{ path('chef_show', {'slug': titulaire.slug}) }}"><i class="fa fa-eye"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -83,78 +124,34 @@
                 {{ form_start(form) }}
                 <div class="modal-body">
                     <div class="row clearfix">
-                        <h6>Identité civile</h6>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                {{ form_widget(form.region) }}
+                                {{ form_widget(form.chef) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                {{ form_widget(form.buchette) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                {{ form_widget(form.dateTitu) }}
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                {{ form_widget(form.imageFile) }}
+                                {{ form_widget(form.lieu) }}
                             </div>
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-12">
                             <div class="form-group">
-                                {{ form_widget(form.sexe) }}
+                                {{ form_widget(form.fonction) }}
                             </div>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-12">
                             <div class="form-group">
-                                {{ form_widget(form.matricule) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                {{ form_widget(form.nom) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="form-group">
-                                {{ form_widget(form.prenoms) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                {{ form_widget(form.datenais) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="form-group">
-                                {{ form_widget(form.lieunais) }}
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <h6 style="margin-top: 25px;">Identité professionnelle</h6>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                {{ form_widget(form.formation) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                {{ form_widget(form.profession) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                {{ form_widget(form.tel) }}
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                {{ form_widget(form.email) }}
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 mt-5">
-                            <div class="form-group">
-                                <label class="fancy-checkbox">
-                                    {{ form_widget(form.titularisation) }}
-                                    <span style="color: #bb0000"><em><b>Cochez si la personne a déjà fait le badge de bois</b></em></span>
-                                </label>
-
+                                {{ form_widget(form.entite) }}
                             </div>
                         </div>
 
@@ -199,7 +196,7 @@
         });
         $(document).ready(function(){
             $('#ajouter').click(function () {
-                if (document.getElementById('appbundle_chef_matricule').value !== ''){
+                if (document.getElementById('appbundle_titularisation_fonction').value !== ''){
                     //
                     document.getElementById('ajouter').innerHTML = 'Veuillez-patienter, enregistrement encours ...';
                     //$(this).attr('visibility', 'hidden')

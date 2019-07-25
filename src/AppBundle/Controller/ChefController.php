@@ -45,6 +45,10 @@ class ChefController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            // Si la case Titularisation est cochée alors affecté la classe A
+            if ($chef->getTitularisation()){
+                $chef->setClasse('A');
+            }
             $em->persist($chef);
             $em->flush();
 
@@ -97,6 +101,15 @@ class ChefController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            // Si Titularisation est cochée et la classe differente de C
+            // Alors affecte classe A sinon descativer la titularisation
+            if ($chef->getTitularisation()){
+                if ($chef->getClasse() != 'C'){
+                    $chef->setClasse('A');
+                }else{
+                    $chef->setTitularisation(false);
+                }
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('chef_show', array('slug' => $chef->getSlug()));

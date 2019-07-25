@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,6 +45,9 @@ class ChefType extends AbstractType
             ])
             ->add('profession', TextType::class,[
                 'attr'=>['class'=>'form-control', 'autocomplete'=>'off', 'placeholder'=>'Profession'], 'required'=> false
+            ])
+            ->add('titularisation', CheckboxType::class,[
+                'attr'=>['class' => 'checkbox-tick'], 'required' => false
             ])
             ->add('sexe', ChoiceType::class, [
                 'choices' => [

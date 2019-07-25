@@ -110,12 +110,36 @@ class Chef
     private $classe;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="titularisation", type="boolean", nullable=true)
+     */
+    private $titularisation;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="buchette", type="integer", nullable=true)
+     */
+    private $buchette;
+
+    /**
      * Un chef appartient a une region
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Region", inversedBy="chefs")
      * @ORM\JoinColumn(name="region", referencedColumnName="id", nullable=true)
      */
     private $region;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Titularisation", mappedBy="chef")
+     */
+    private $titularisations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Fonction", mappedBy="chef")
+     */
+    private $fonctions;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -734,5 +758,128 @@ class Chef
     public function getSexe()
     {
         return $this->sexe;
+    }
+
+    /**
+     * Set titularisation
+     *
+     * @param boolean $titularisation
+     *
+     * @return Chef
+     */
+    public function setTitularisation($titularisation)
+    {
+        $this->titularisation = $titularisation;
+
+        return $this;
+    }
+
+    /**
+     * Get titularisation
+     *
+     * @return boolean
+     */
+    public function getTitularisation()
+    {
+        return $this->titularisation;
+    }
+
+    /**
+     * Set buchette
+     *
+     * @param integer $buchette
+     *
+     * @return Chef
+     */
+    public function setBuchette($buchette)
+    {
+        $this->buchette = $buchette;
+
+        return $this;
+    }
+
+    /**
+     * Get buchette
+     *
+     * @return integer
+     */
+    public function getBuchette()
+    {
+        return $this->buchette;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->titularisations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add titularisation
+     *
+     * @param \AppBundle\Entity\Titularisation $titularisation
+     *
+     * @return Chef
+     */
+    public function addTitularisation(\AppBundle\Entity\Titularisation $titularisation)
+    {
+        $this->titularisations[] = $titularisation;
+
+        return $this;
+    }
+
+    /**
+     * Remove titularisation
+     *
+     * @param \AppBundle\Entity\Titularisation $titularisation
+     */
+    public function removeTitularisation(\AppBundle\Entity\Titularisation $titularisation)
+    {
+        $this->titularisations->removeElement($titularisation);
+    }
+
+    /**
+     * Get titularisations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTitularisations()
+    {
+        return $this->titularisations;
+    }
+
+    /**
+     * Add fonction
+     *
+     * @param \AppBundle\Entity\Fonction $fonction
+     *
+     * @return Chef
+     */
+    public function addFonction(\AppBundle\Entity\Fonction $fonction)
+    {
+        $this->fonctions[] = $fonction;
+
+        return $this;
+    }
+
+    /**
+     * Remove fonction
+     *
+     * @param \AppBundle\Entity\Fonction $fonction
+     */
+    public function removeFonction(\AppBundle\Entity\Fonction $fonction)
+    {
+        $this->fonctions->removeElement($fonction);
+    }
+
+    /**
+     * Get fonctions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFonctions()
+    {
+        return $this->fonctions;
     }
 }
