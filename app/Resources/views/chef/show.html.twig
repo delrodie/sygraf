@@ -118,6 +118,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 COL-SM-12">
+            {% if participations %}
+
+            {% else %}
+                <div class="form-group text-center">
+                    {{ form_start(delete_form, {'attr': {'onsubmit': 'return confirm("Êtes-vous sur de vouloir supprimer ce chef?");'}}) }}
+                    <button class="btn btn-danger"><i class="fa fa-trash"></i> Suprimer</button>
+                    {{ form_end(delete_form) }}
+                </div>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}

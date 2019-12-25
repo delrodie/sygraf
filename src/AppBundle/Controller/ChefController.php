@@ -78,7 +78,7 @@ class ChefController extends Controller
         $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($chef);
 
-        $participations = $em->getRepository('AppBundle:Participer')->findBy(['chef'=>$chef->getId()]);
+        $participations = $em->getRepository('AppBundle:Participer')->findBy(['chef'=>$chef->getId()]); //dump($participations);die();
 
         return $this->render('chef/show.html.twig', array(
             'chef' => $chef,
@@ -101,6 +101,8 @@ class ChefController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $old_titularisation = $request->get('oldTitularisation');
             // Si Titularisation est cochée et la classe differente de C
             // Alors affecte classe A sinon descativer la titularisation
             if ($chef->getTitularisation()){
@@ -109,8 +111,17 @@ class ChefController extends Controller
                 }else{
                     $chef->setTitularisation(false);
                 }
+            }elseif ($chef->getTitularisation() != $old_titularisation){
+                $participation = $em->getRepository("AppBundle:Participer")->findOneBy(['chef'=>$chef->getId()],['id'=>"DESC"]);
+                if (!$participation){
+                    $classe = null;
+                }else{
+                    $formation = $em->getRepository("AppBundle:Formation")->findOneBy(['id'=>$participation->getFormation()->getId()]);
+                    $classe = $formation->getType()->getCode();
+                } //dump($classe);die();
+                $chef->setClasse($classe);
             }
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
 
             return $this->redirectToRoute('chef_show', array('slug' => $chef->getSlug()));
         }
@@ -145,7 +156,7 @@ class ChefController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('chef_index');
+        return $this->redirectToRoute('chef_new');
     }
 
     /**
