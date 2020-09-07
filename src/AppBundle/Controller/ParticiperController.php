@@ -53,7 +53,7 @@ class ParticiperController extends Controller
                 $this->addFlash('notice', "Le stagiaire ".$participer->getChef()->getNom().' '.$participer->getChef()->getPrenoms()." a été bien associé à la formation de ". $participer->getFormation()->getLieu());
                 //$gestionFonction->create($participer->getChef(),$participer->getFonction(),$participer->getEntite(),$participer->getFormation()->getDebut());
             }else{
-                $this->addFlash('error', "Le stagiaire ".$participer->getChef()->getNom().' '.$participer->getChef()->getPrenoms()." n'a pas pu être associé à la formation de ". $participer->getFormation()->getLieu());
+                $this->addFlash('error', "Pour des raisons d'âge, le(la) stagiaire ".$participer->getChef()->getNom().' '.$participer->getChef()->getPrenoms()." n'a pas pu être associé(e) à cette formation de ". $participer->getFormation()->getType()->getLibelle());
             }
 
             return $this->redirectToRoute('participer_new', [

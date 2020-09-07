@@ -49,6 +49,18 @@ class ChefController extends Controller
             if ($chef->getTitularisation()){
                 $chef->setClasse('A');
             }
+            // verifcation de la date de naissance
+            // Si l'age est inférieur à 21ans alors echec
+            $date_anniversaire = date_create($chef->getDatenais());
+            $aujourdhui = date_create(date('Y-m-d'));
+            $difference = date_diff($date_anniversaire,$aujourdhui);
+            $age = $difference->format('%y');
+
+            if ($age < 21){
+                $this->addFlash('error', "Echec! Ce chef n'a pas encore 21 ans. Impossible de l'enregistrer dans le système.");
+                return $this->redirectToRoute('chef_new');
+            }
+
             $em->persist($chef);
             $em->flush();
 

@@ -18,6 +18,25 @@ class ParticiperUtilities
 
     public function create($participer)
     {
+        // Verification de l'age du participant
+        // Calcul de l'age
+        $chef= $participer->getChef();
+        $date_anniversaire = date_create($chef->getDatenais());
+        $aujourdhui = date_create(date('Y-m-d'));
+        $difference = date_diff($date_anniversaire,$aujourdhui);
+        $age = $difference->format('%y');
+
+        //Recuperation du type de formation
+        $formation = $participer->getFormation()->getType()->getLibelle();
+
+        if ($formation === 'PREBADGE'){
+            if ($age < 22) return false;
+        }elseif ($formation === 'BADGE'){
+            if ($age < 23)return false ;
+        }else{
+            if ($age < 21)return false;
+        }
+
         $annee = substr($participer->getFormation()->getDebut(),6,4);
         $participant = new Participer();
         $participant->setAnnee($annee);
